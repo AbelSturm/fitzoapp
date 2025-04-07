@@ -6,6 +6,7 @@
     "athlete_cta": "Try as an Athlete"
   },
   "features": {
+    "title": "What Fitzio Offers",
     "workouts": {
       "title": "Create & Assign Workouts",
       "description": "Coaches can easily create, customize, and assign workouts to their athletes."
@@ -19,7 +20,38 @@
       "description": "Secure payments and intelligent tracking to monitor progress effectively."
     }
   },
+  "landing": {
+    "trainers": {
+      "title": "For Trainers",
+      "feature1": "Create and customize training programs",
+      "feature2": "Assign workouts to individual athletes or groups",
+      "feature3": "Create questionnaires to assess progress",
+      "feature4": "Track athlete progress and completion rates",
+      "cta": "Start as a Trainer"
+    },
+    "athletes": {
+      "title": "For Athletes",
+      "feature1": "Access personalized workout plans",
+      "feature2": "Mark workouts as completed",
+      "feature3": "Complete questionnaires for assessments",
+      "feature4": "Track your training progress over time",
+      "cta": "Start as an Athlete"
+    },
+    "app": {
+      "title": "Get the Fitzio App",
+      "subtitle": "Train anywhere, anytime. Download our mobile app for the best experience.",
+      "appstore": {
+        "label": "Download on the",
+        "name": "App Store"
+      },
+      "googleplay": {
+        "label": "GET IT ON",
+        "name": "Google Play"
+      }
+    }
+  },
   "testimonial": {
+    "title": "What Our Users Say",
     "quote": "Now I can focus on coaching, not managing files and messages.",
     "author": "– Carla, rowing coach"
   },

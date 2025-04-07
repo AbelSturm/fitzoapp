@@ -6,6 +6,7 @@
     "athlete_cta": "Prueba como Atleta"
   },
   "features": {
+    "title": "Lo que Ofrece Fitzio",
     "workouts": {
       "title": "Crea y Asigna Entrenamientos",
       "description": "Los entrenadores pueden crear, personalizar y asignar entrenamientos fácilmente a sus atletas."
@@ -19,7 +20,38 @@
       "description": "Pagos seguros y seguimiento inteligente para monitorear el progreso de manera efectiva."
     }
   },
+  "landing": {
+    "trainers": {
+      "title": "Para Entrenadores",
+      "feature1": "Crea y personaliza programas de entrenamiento",
+      "feature2": "Asigna entrenamientos a atletas individuales o grupos",
+      "feature3": "Crea cuestionarios para evaluar el progreso",
+      "feature4": "Monitorea el progreso de los atletas y las tasas de finalización",
+      "cta": "Comenzar como Entrenador"
+    },
+    "athletes": {
+      "title": "Para Atletas",
+      "feature1": "Accede a planes de entrenamiento personalizados",
+      "feature2": "Marca entrenamientos como completados",
+      "feature3": "Completa cuestionarios para evaluaciones",
+      "feature4": "Monitorea tu progreso de entrenamiento a lo largo del tiempo",
+      "cta": "Comenzar como Atleta"
+    },
+    "app": {
+      "title": "Obtén la App de Fitzio",
+      "subtitle": "Entrena donde sea, cuando sea. Descarga nuestra aplicación móvil para la mejor experiencia.",
+      "appstore": {
+        "label": "Descárgalo en el",
+        "name": "App Store"
+      },
+      "googleplay": {
+        "label": "OBTENLO EN",
+        "name": "Google Play"
+      }
+    }
+  },
   "testimonial": {
+    "title": "Lo que Dicen Nuestros Usuarios",
     "quote": "Ahora puedo concentrarme en entrenar, no en administrar archivos y mensajes.",
     "author": "– Carla, entrenadora de remo"
   },

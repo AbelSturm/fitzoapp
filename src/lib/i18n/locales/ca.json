@@ -6,6 +6,7 @@
     "athlete_cta": "Prova com a Atleta"
   },
   "features": {
+    "title": "El que Ofereix Fitzio",
     "workouts": {
       "title": "Crea i Assigna Entrenaments",
       "description": "Els entrenadors poden crear, personalitzar i assignar entrenaments fàcilment als seus atletes."
@@ -19,7 +20,38 @@
       "description": "Pagaments segurs i seguiment intel·ligent per monitoritzar el progrés de manera efectiva."
     }
   },
+  "landing": {
+    "trainers": {
+      "title": "Per a Entrenadors",
+      "feature1": "Crea i personalitza programes d'entrenament",
+      "feature2": "Assigna entrenaments a atletes individuals o grups",
+      "feature3": "Crea qüestionaris per avaluar el progrés",
+      "feature4": "Monitoritza el progrés dels atletes i les taxes de finalització",
+      "cta": "Comença com a Entrenador"
+    },
+    "athletes": {
+      "title": "Per a Atletes",
+      "feature1": "Accedeix a plans d'entrenament personalitzats",
+      "feature2": "Marca entrenaments com a completats",
+      "feature3": "Completa qüestionaris per a avaluacions",
+      "feature4": "Monitoritza el teu progrés d'entrenament al llarg del temps",
+      "cta": "Comença com a Atleta"
+    },
+    "app": {
+      "title": "Obtén l'App de Fitzio",
+      "subtitle": "Entrena a qualsevol lloc, en qualsevol moment. Descarrega la nostra aplicació mòbil per a la millor experiència.",
+      "appstore": {
+        "label": "Descarrega-ho a l'",
+        "name": "App Store"
+      },
+      "googleplay": {
+        "label": "ACONSEGUEIX-LO A",
+        "name": "Google Play"
+      }
+    }
+  },
   "testimonial": {
+    "title": "El que Diuen els Nostres Usuaris",
     "quote": "Ara puc concentrar-me en entrenar, no en gestionar arxius i missatges.",
     "author": "– Carla, entrenadora de rem"
   },
