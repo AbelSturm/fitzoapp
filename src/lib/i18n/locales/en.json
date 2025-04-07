@@ -91,18 +91,22 @@
     "have_account": "Already have an account?",
     "no_account": "Don't have an account?",
     "user_already_exists": "This email is already registered. Please log in instead or use a different email.",
-    "username_taken": "This username is already taken. Please choose another one."
+    "username_taken": "This username is already taken. Please choose another one.",
+    "registration_success": "Your account has been successfully created! Please log in with your credentials."
   },
   "dashboard": {
     "trainer": {
       "welcome": "Welcome to your Trainer Dashboard",
       "overview": "Your Training Overview",
-      "getting_started": "Start by creating your first workout program or connecting with athletes."
+      "getting_started": "Start by creating your first workout program or connecting with athletes.",
+      "first_time_welcome": "Welcome to Fitzio! 🎉 This is your trainer dashboard where you can create workouts, assign exercises, and track athlete progress. Get started by creating your first workout or connecting with athletes."
     },
     "athlete": {
       "welcome": "Welcome to your Athlete Dashboard",
       "overview": "Your Training Overview",
-      "getting_started": "View your assigned workouts and track your progress here."
-    }
+      "getting_started": "View your assigned workouts and track your progress here.",
+      "first_time_welcome": "Welcome to Fitzio! 🎉 This is your athlete dashboard where you can view your assigned workouts, complete questionnaires, and track your progress. Check the sections below to see what your trainer has assigned to you."
+    },
+    "dismiss_welcome": "Got it!"
   }
 }

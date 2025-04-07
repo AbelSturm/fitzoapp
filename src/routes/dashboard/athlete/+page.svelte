@@ -18,6 +18,26 @@
   let totalTrainers = 0;
   let loading = true;
   
+  // Welcome message state
+  let showWelcome = false;
+  
+  // Hide welcome message and save preference
+  async function dismissWelcome() {
+    showWelcome = false;
+    
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await supabase
+          .from('profiles')
+          .update({ has_seen_welcome: true })
+          .eq('id', session.user.id);
+      }
+    } catch (err) {
+      console.error('Error updating welcome message preference:', err);
+    }
+  }
+  
   // Define interfaces for our data
   interface AthleteWorkout {
     id: string;
@@ -130,10 +150,10 @@
       const { data: { session } } = await supabase.auth.getSession();
       
       if (session) {
-        // Get user profile to display name
+        // Check if user has seen welcome message
         const { data: profile } = await supabase
           .from('profiles')
-          .select('email')
+          .select('email, has_seen_welcome')
           .eq('id', session.user.id)
           .single();
           
@@ -143,6 +163,9 @@
           user.firstName = profile.email.split('@')[0].split('.')[0];
           // Capitalize first letter
           user.firstName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1);
+          
+          // Set welcome message visibility
+          showWelcome = profile.has_seen_welcome !== true;
         }
         
         // 1. Fetch assigned workouts from Supabase
@@ -225,6 +248,21 @@
 </script>
 
 <div class="max-w-7xl mx-auto px-4">
+  <!-- First-time welcome message -->
+  {#if showWelcome}
+    <div class="bg-purple-100 border-l-4 border-purple-500 p-4 mb-8 rounded-md">
+      <div class="flex justify-between items-center">
+        <p class="text-purple-800">{$_('dashboard.athlete.first_time_welcome')}</p>
+        <button 
+          class="text-purple-800 hover:text-purple-900 font-medium"
+          on:click={dismissWelcome}
+        >
+          {$_('dashboard.dismiss_welcome')}
+        </button>
+      </div>
+    </div>
+  {/if}
+
   <!-- Welcome Message Section -->
   <section class="mb-8">
     <h1 class="text-2xl md:text-3xl font-bold text-purple-900">

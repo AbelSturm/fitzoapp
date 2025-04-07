@@ -91,18 +91,22 @@
     "have_account": "¿Ya tienes una cuenta?",
     "no_account": "¿No tienes una cuenta?",
     "user_already_exists": "Este correo ya está registrado. Por favor inicia sesión o utiliza un correo diferente.",
-    "username_taken": "Este nombre de usuario ya está en uso. Por favor, elige otro."
+    "username_taken": "Este nombre de usuario ya está en uso. Por favor, elige otro.",
+    "registration_success": "¡Tu cuenta ha sido creada exitosamente! Por favor inicia sesión con tus credenciales."
   },
   "dashboard": {
     "trainer": {
       "welcome": "Bienvenido a tu Panel de Entrenador",
       "overview": "Tu Resumen de Entrenamiento",
-      "getting_started": "Comienza creando tu primer programa de entrenamiento o conectando con atletas."
+      "getting_started": "Comienza creando tu primer programa de entrenamiento o conectando con atletas.",
+      "first_time_welcome": "¡Bienvenido a Fitzio! 🎉 Este es tu panel de entrenador donde puedes crear entrenamientos, asignar ejercicios y hacer seguimiento del progreso de tus atletas. Comienza creando tu primer entrenamiento o conectando con atletas."
     },
     "athlete": {
       "welcome": "Bienvenido a tu Panel de Atleta",
       "overview": "Tu Resumen de Entrenamiento",
-      "getting_started": "Visualiza tus entrenamientos asignados y sigue tu progreso aquí."
-    }
+      "getting_started": "Visualiza tus entrenamientos asignados y sigue tu progreso aquí.",
+      "first_time_welcome": "¡Bienvenido a Fitzio! 🎉 Este es tu panel de atleta donde puedes ver tus entrenamientos asignados, completar cuestionarios y seguir tu progreso. Revisa las secciones a continuación para ver lo que tu entrenador te ha asignado."
+    },
+    "dismiss_welcome": "¡Entendido!"
   }
 }

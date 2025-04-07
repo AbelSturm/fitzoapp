@@ -104,8 +104,11 @@
           throw new Error(profileError.message || 'Failed to create user profile');
         }
 
-        // Redirect to dashboard based on role
-        goto(`/dashboard/${role}`);
+        // Sign out the user after successful registration to avoid auto-login issues
+        await supabase.auth.signOut();
+        
+        // Redirect to login page with success parameter
+        goto(`/login?registered=true&email=${encodeURIComponent(email)}`);
       }
     } catch (e: any) {
       console.error('Registration error:', e);

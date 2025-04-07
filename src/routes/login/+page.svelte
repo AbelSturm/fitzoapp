@@ -4,14 +4,28 @@
   import { _ } from 'svelte-i18n';
   import { redirect } from '@sveltejs/kit';
   import { onMount } from 'svelte';
+  import { page } from '$app/stores';
 
   let email = '';
   let password = '';
   let loading = false;
   let error: string | null = null;
+  let showWelcomeMessage = false;
+  let registeredEmail = '';
 
   // Check for existing session on mount
   onMount(async () => {
+    // Check for registration success parameter
+    const registered = $page.url.searchParams.get('registered');
+    registeredEmail = $page.url.searchParams.get('email') || '';
+    
+    if (registered === 'true') {
+      showWelcomeMessage = true;
+      if (registeredEmail) {
+        email = registeredEmail;
+      }
+    }
+    
     const { data } = await supabase.auth.getSession();
     const session = data.session;
 
@@ -53,6 +67,7 @@
       console.log('Starting login process...');
       loading = true;
       error = null;
+      showWelcomeMessage = false;
       
       console.log('Attempting to sign in with:', { email });
       const { data, error: authError } = await supabase.auth.signInWithPassword({
@@ -133,6 +148,21 @@
     </div>
 
     <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
+      {#if showWelcomeMessage}
+        <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-green-700">{$_('auth.registration_success', { values: { email: registeredEmail } })}</p>
+            </div>
+          </div>
+        </div>
+      {/if}
+
       {#if error}
         <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
           <div class="flex">

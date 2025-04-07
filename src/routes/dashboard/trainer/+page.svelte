@@ -10,6 +10,7 @@
   import { workoutsService, type Workout } from '$lib/services/workouts';
   import Card from '$lib/components/ui/Card.svelte';
   import Button from '$lib/components/ui/Button.svelte';
+  import { supabase } from '$lib/supabaseClient';
 
   // Extended workout type for dashboard
   interface DashboardWorkout extends Workout {
@@ -23,9 +24,41 @@
   let loading = true;
   let recentWorkouts: DashboardWorkout[] = [];
   
+  // Welcome message state
+  let showWelcome = false;
+  
+  // Hide welcome message and save preference
+  async function dismissWelcome() {
+    showWelcome = false;
+    
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await supabase
+          .from('profiles')
+          .update({ has_seen_welcome: true })
+          .eq('id', session.user.id);
+      }
+    } catch (err) {
+      console.error('Error updating welcome message preference:', err);
+    }
+  }
+  
   // Load data from Supabase
   onMount(async () => {
     try {
+      // Check if user has seen welcome message
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('has_seen_welcome')
+          .eq('id', session.user.id)
+          .single();
+          
+        showWelcome = profile?.has_seen_welcome !== true;
+      }
+      
       // Load questionnaires count
       const questionnairesData = await questionnairesService.getTrainerQuestionnaires();
       totalQuestionnaires = questionnairesData.length;
@@ -47,6 +80,21 @@
 </script>
 
 <div class="max-w-7xl mx-auto">
+  <!-- First-time welcome message -->
+  {#if showWelcome}
+    <div class="bg-purple-100 border-l-4 border-purple-500 p-4 mb-8 rounded-md">
+      <div class="flex justify-between items-center">
+        <p class="text-purple-800">{$_('dashboard.trainer.first_time_welcome')}</p>
+        <button 
+          class="text-purple-800 hover:text-purple-900 font-medium"
+          on:click={dismissWelcome}
+        >
+          {$_('dashboard.dismiss_welcome')}
+        </button>
+      </div>
+    </div>
+  {/if}
+
   <h1 class="text-3xl font-bold mb-8">{$_('dashboard.trainer.welcome')}</h1>
   
   <!-- Stats cards -->

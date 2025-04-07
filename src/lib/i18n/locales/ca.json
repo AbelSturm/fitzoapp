@@ -91,18 +91,22 @@
     "have_account": "Ja tens un compte?",
     "no_account": "No tens un compte?",
     "user_already_exists": "Aquest correu ja està registrat. Si us plau inicia sessió o utilitza un correu diferent.",
-    "username_taken": "Aquest nom d'usuari ja està en ús. Si us plau, tria'n un altre."
+    "username_taken": "Aquest nom d'usuari ja està en ús. Si us plau, tria'n un altre.",
+    "registration_success": "El teu compte ha estat creat amb èxit! Si us plau, inicia sessió amb les teves credencials."
   },
   "dashboard": {
     "trainer": {
       "welcome": "Benvingut al teu Panell d'Entrenador",
       "overview": "El teu Resum d'Entrenament",
-      "getting_started": "Comença creant el teu primer programa d'entrenament o connectant amb atletes."
+      "getting_started": "Comença creant el teu primer programa d'entrenament o connectant amb atletes.",
+      "first_time_welcome": "Benvingut a Fitzio! 🎉 Aquest és el teu panell d'entrenador on pots crear entrenaments, assignar exercicis i fer seguiment del progrés dels teus atletes. Comença creant el teu primer entrenament o connectant amb atletes."
     },
     "athlete": {
       "welcome": "Benvingut al teu Panell d'Atleta",
       "overview": "El teu Resum d'Entrenament",
-      "getting_started": "Visualitza els teus entrenaments assignats i segueix el teu progrés aquí."
-    }
+      "getting_started": "Visualitza els teus entrenaments assignats i segueix el teu progrés aquí.",
+      "first_time_welcome": "Benvingut a Fitzio! 🎉 Aquest és el teu panell d'atleta on pots veure els teus entrenaments assignats, completar qüestionaris i seguir el teu progrés. Revisa les seccions a continuació per veure el que el teu entrenador t'ha assignat."
+    },
+    "dismiss_welcome": "Entès!"
   }
 }
