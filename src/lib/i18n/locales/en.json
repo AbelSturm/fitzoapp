@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "title": "Train better. Train with purpose.",
+    "subtitle": "Fitzio connects coaches and athletes to make training smarter, more efficient, and more personal.",
+    "coach_cta": "Try as a Coach",
+    "athlete_cta": "Try as an Athlete"
+  },
+  "features": {
+    "workouts": {
+      "title": "Create & Assign Workouts",
+      "description": "Coaches can easily create, customize, and assign workouts to their athletes."
+    },
+    "completion": {
+      "title": "Easy Completion",
+      "description": "Athletes receive and complete workouts with a simple, intuitive interface."
+    },
+    "progress": {
+      "title": "Smart Progress",
+      "description": "Secure payments and intelligent tracking to monitor progress effectively."
+    }
+  },
+  "testimonial": {
+    "quote": "Now I can focus on coaching, not managing files and messages.",
+    "author": "– Carla, rowing coach"
+  },
+  "cta": {
+    "title": "Ready to get started?",
+    "create_account": "Create account",
+    "login": "Log in"
+  },
+  "nav": {
+    "login": "Log in",
+    "create_account": "Create account",
+    "sign_out": "Sign out",
+    "dashboard": "My Dashboard"
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "rights": "All rights reserved."
+  },
+  "auth": {
+    "login_title": "Log in to Fitzio",
+    "register_title": "Create your account",
+    "email": "Email address",
+    "password": "Password",
+    "username": "Username",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "role": "I am a",
+    "select_role": "Select your role",
+    "trainer": "Trainer",
+    "athlete": "Athlete",
+    "create_account": "Create account",
+    "creating_account": "Creating account...",
+    "logging_in": "Logging in...",
+    "login": "Log in",
+    "have_account": "Already have an account?",
+    "no_account": "Don't have an account?",
+    "user_already_exists": "This email is already registered. Please log in instead or use a different email.",
+    "username_taken": "This username is already taken. Please choose another one."
+  },
+  "dashboard": {
+    "trainer": {
+      "welcome": "Welcome to your Trainer Dashboard",
+      "overview": "Your Training Overview",
+      "getting_started": "Start by creating your first workout program or connecting with athletes."
+    },
+    "athlete": {
+      "welcome": "Welcome to your Athlete Dashboard",
+      "overview": "Your Training Overview",
+      "getting_started": "View your assigned workouts and track your progress here."
+    }
+  }
+}

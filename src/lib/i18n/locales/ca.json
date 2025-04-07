@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "title": "Entrena millor. Entrena amb propòsit.",
+    "subtitle": "Fitzio connecta entrenadors i atletes per fer l'entrenament més intel·ligent, eficient i personal.",
+    "coach_cta": "Prova com a Entrenador",
+    "athlete_cta": "Prova com a Atleta"
+  },
+  "features": {
+    "workouts": {
+      "title": "Crea i Assigna Entrenaments",
+      "description": "Els entrenadors poden crear, personalitzar i assignar entrenaments fàcilment als seus atletes."
+    },
+    "completion": {
+      "title": "Completat Fàcil",
+      "description": "Els atletes reben i completen els entrenaments amb una interfície simple i intuïtiva."
+    },
+    "progress": {
+      "title": "Progrés Intel·ligent",
+      "description": "Pagaments segurs i seguiment intel·ligent per monitoritzar el progrés de manera efectiva."
+    }
+  },
+  "testimonial": {
+    "quote": "Ara puc concentrar-me en entrenar, no en gestionar arxius i missatges.",
+    "author": "– Carla, entrenadora de rem"
+  },
+  "cta": {
+    "title": "Preparat per començar?",
+    "create_account": "Crear compte",
+    "login": "Iniciar sessió"
+  },
+  "nav": {
+    "login": "Iniciar sessió",
+    "create_account": "Crear compte",
+    "sign_out": "Tancar sessió",
+    "dashboard": "El meu Panell"
+  },
+  "footer": {
+    "about": "Sobre nosaltres",
+    "contact": "Contacte",
+    "privacy": "Política de Privacitat",
+    "rights": "Tots els drets reservats."
+  },
+  "auth": {
+    "login_title": "Iniciar sessió a Fitzio",
+    "register_title": "Crea el teu compte",
+    "email": "Correu electrònic",
+    "password": "Contrasenya",
+    "username": "Nom d'usuari",
+    "first_name": "Nom",
+    "last_name": "Cognom",
+    "role": "Sóc un",
+    "select_role": "Selecciona el teu rol",
+    "trainer": "Entrenador",
+    "athlete": "Atleta",
+    "create_account": "Crear compte",
+    "creating_account": "Creant compte...",
+    "logging_in": "Iniciant sessió...",
+    "login": "Iniciar sessió",
+    "have_account": "Ja tens un compte?",
+    "no_account": "No tens un compte?",
+    "user_already_exists": "Aquest correu ja està registrat. Si us plau inicia sessió o utilitza un correu diferent.",
+    "username_taken": "Aquest nom d'usuari ja està en ús. Si us plau, tria'n un altre."
+  },
+  "dashboard": {
+    "trainer": {
+      "welcome": "Benvingut al teu Panell d'Entrenador",
+      "overview": "El teu Resum d'Entrenament",
+      "getting_started": "Comença creant el teu primer programa d'entrenament o connectant amb atletes."
+    },
+    "athlete": {
+      "welcome": "Benvingut al teu Panell d'Atleta",
+      "overview": "El teu Resum d'Entrenament",
+      "getting_started": "Visualitza els teus entrenaments assignats i segueix el teu progrés aquí."
+    }
+  }
+}

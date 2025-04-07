@@ -1,0 +1,117 @@
+{
+	"/": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/athlete": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts",
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/athlete/profile": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/athlete/questionnaires": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/athlete/questionnaires/[id]": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/athlete/settings": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/athlete/workouts": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/athlete/workouts/[id]": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts",
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/athletes": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/athletes/[id]": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/questionnaires": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/questionnaires/new": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/questionnaires/[id]": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/questionnaires/[id]/edit": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/settings": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/workouts": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/workouts/new": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/trainer/workouts/[id]": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/login": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/register": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	]
+}

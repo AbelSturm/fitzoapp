@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "title": "Entrena mejor. Entrena con propósito.",
+    "subtitle": "Fitzio conecta entrenadores y atletas para hacer el entrenamiento más inteligente, eficiente y personal.",
+    "coach_cta": "Prueba como Entrenador",
+    "athlete_cta": "Prueba como Atleta"
+  },
+  "features": {
+    "workouts": {
+      "title": "Crea y Asigna Entrenamientos",
+      "description": "Los entrenadores pueden crear, personalizar y asignar entrenamientos fácilmente a sus atletas."
+    },
+    "completion": {
+      "title": "Completado Fácil",
+      "description": "Los atletas reciben y completan los entrenamientos con una interfaz simple e intuitiva."
+    },
+    "progress": {
+      "title": "Progreso Inteligente",
+      "description": "Pagos seguros y seguimiento inteligente para monitorear el progreso de manera efectiva."
+    }
+  },
+  "testimonial": {
+    "quote": "Ahora puedo concentrarme en entrenar, no en administrar archivos y mensajes.",
+    "author": "– Carla, entrenadora de remo"
+  },
+  "cta": {
+    "title": "¿Listo para empezar?",
+    "create_account": "Crear cuenta",
+    "login": "Iniciar sesión"
+  },
+  "nav": {
+    "login": "Iniciar sesión",
+    "create_account": "Crear cuenta",
+    "sign_out": "Cerrar sesión",
+    "dashboard": "Mi Panel"
+  },
+  "footer": {
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "privacy": "Política de Privacidad",
+    "rights": "Todos los derechos reservados."
+  },
+  "auth": {
+    "login_title": "Iniciar sesión en Fitzio",
+    "register_title": "Crea tu cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "username": "Nombre de usuario",
+    "first_name": "Nombre",
+    "last_name": "Apellido",
+    "role": "Soy un",
+    "select_role": "Selecciona tu rol",
+    "trainer": "Entrenador",
+    "athlete": "Atleta",
+    "create_account": "Crear cuenta",
+    "creating_account": "Creando cuenta...",
+    "logging_in": "Iniciando sesión...",
+    "login": "Iniciar sesión",
+    "have_account": "¿Ya tienes una cuenta?",
+    "no_account": "¿No tienes una cuenta?",
+    "user_already_exists": "Este correo ya está registrado. Por favor inicia sesión o utiliza un correo diferente.",
+    "username_taken": "Este nombre de usuario ya está en uso. Por favor, elige otro."
+  },
+  "dashboard": {
+    "trainer": {
+      "welcome": "Bienvenido a tu Panel de Entrenador",
+      "overview": "Tu Resumen de Entrenamiento",
+      "getting_started": "Comienza creando tu primer programa de entrenamiento o conectando con atletas."
+    },
+    "athlete": {
+      "welcome": "Bienvenido a tu Panel de Atleta",
+      "overview": "Tu Resumen de Entrenamiento",
+      "getting_started": "Visualiza tus entrenamientos asignados y sigue tu progreso aquí."
+    }
+  }
+}
