@@ -11,7 +11,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS profiles (
   id uuid PRIMARY KEY REFERENCES auth.users ON DELETE CASCADE,
   email text NOT NULL,
-  role text NOT NULL CHECK (role IN ('trainer', 'athlete')),
+  role text NOT NULL CHECK (role IN ('trainer', 'athlete', 'admin')),
   username text UNIQUE,
   first_name text, 
   last_name text,
@@ -19,28 +19,108 @@ CREATE TABLE IF NOT EXISTS profiles (
   created_at timestamptz DEFAULT now()
 );
 
+-- Add IF NOT EXISTS for columns
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'profiles' AND column_name = 'username') THEN
+        ALTER TABLE profiles ADD COLUMN username text UNIQUE;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'profiles' AND column_name = 'first_name') THEN
+        ALTER TABLE profiles ADD COLUMN first_name text;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'profiles' AND column_name = 'last_name') THEN
+        ALTER TABLE profiles ADD COLUMN last_name text;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'profiles' AND column_name = 'has_seen_welcome') THEN
+        ALTER TABLE profiles ADD COLUMN has_seen_welcome boolean DEFAULT false;
+    END IF;
+END
+$$;
+
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 
--- Allow users to insert their own profile
-CREATE POLICY "Users can insert their own profile"
-  ON profiles
-  FOR INSERT
-  TO authenticated
-  WITH CHECK (auth.uid() = id);
+-- Wrap policies in DO $$ blocks with IF NOT EXISTS checks
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'profiles' 
+        AND policyname = 'Users can insert their own profile'
+    ) THEN
+        CREATE POLICY "Users can insert their own profile"
+        ON profiles
+        FOR INSERT
+        TO authenticated
+        WITH CHECK (auth.uid() = id);
+    END IF;
 
--- Allow users to read their own profile
-CREATE POLICY "Users can read own profile"
-  ON profiles
-  FOR SELECT
-  TO authenticated
-  USING (auth.uid() = id);
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'profiles' 
+        AND policyname = 'Users can read own profile'
+    ) THEN
+        CREATE POLICY "Users can read own profile"
+        ON profiles
+        FOR SELECT
+        TO authenticated
+        USING (auth.uid() = id);
+    END IF;
 
--- Allow users to update their own profile
-CREATE POLICY "Users can update own profile"
-  ON profiles
-  FOR UPDATE
-  TO authenticated
-  USING (auth.uid() = id);
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'profiles' 
+        AND policyname = 'Users can update own profile'
+    ) THEN
+        CREATE POLICY "Users can update own profile"
+        ON profiles
+        FOR UPDATE
+        TO authenticated
+        USING (auth.uid() = id);
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'profiles' 
+        AND policyname = 'Admins can view all profiles'
+    ) THEN
+        CREATE POLICY "Admins can view all profiles" 
+        ON profiles
+        FOR SELECT
+        TO authenticated
+        USING (auth.uid() IN (SELECT id FROM profiles WHERE role = 'admin'));
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'profiles' 
+        AND policyname = 'Admins can update any profile'
+    ) THEN
+        CREATE POLICY "Admins can update any profile" 
+        ON profiles
+        FOR UPDATE
+        TO authenticated
+        USING (auth.uid() IN (SELECT id FROM profiles WHERE role = 'admin'));
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'profiles' 
+        AND policyname = 'Users cannot set role to admin'
+    ) THEN
+        CREATE POLICY "Users cannot set role to admin" 
+        ON profiles
+        FOR UPDATE
+        TO authenticated
+        WITH CHECK (
+            auth.uid() = id AND
+            (role != 'admin' OR auth.uid() IN (SELECT id FROM profiles WHERE role = 'admin'))
+        );
+    END IF;
+END
+$$;
 
 -- Function for welcome message preference
 CREATE OR REPLACE FUNCTION update_welcome_message_preference()
@@ -51,11 +131,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Trigger for welcome message preference
-CREATE TRIGGER preserve_welcome_message_preference
-BEFORE UPDATE ON profiles
-FOR EACH ROW
-EXECUTE FUNCTION update_welcome_message_preference();
+-- Check if trigger exists before creating it
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger 
+        WHERE tgname = 'preserve_welcome_message_preference'
+    ) THEN
+        CREATE TRIGGER preserve_welcome_message_preference
+        BEFORE UPDATE ON profiles
+        FOR EACH ROW
+        EXECUTE FUNCTION update_welcome_message_preference();
+    END IF;
+END
+$$;
 
 -- ==========================================
 -- QUESTIONNAIRES SYSTEM
@@ -121,11 +210,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create trigger for questionnaire timestamp updates
-CREATE TRIGGER update_questionnaire_timestamp
-BEFORE UPDATE ON questionnaires
-FOR EACH ROW
-EXECUTE FUNCTION update_questionnaire_updated_at();
+-- Check if trigger exists before creating it
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger 
+        WHERE tgname = 'update_questionnaire_timestamp'
+    ) THEN
+        CREATE TRIGGER update_questionnaire_timestamp
+        BEFORE UPDATE ON questionnaires
+        FOR EACH ROW
+        EXECUTE FUNCTION update_questionnaire_updated_at();
+    END IF;
+END
+$$;
 
 -- Create indexes for performance
 CREATE INDEX IF NOT EXISTS idx_questions_questionnaire_id ON questions(questionnaire_id);
@@ -141,93 +239,199 @@ ALTER TABLE questionnaire_assignments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE responses ENABLE ROW LEVEL SECURITY;
 
 -- Questionnaires policies
-CREATE POLICY "Trainers can create questionnaires" ON questionnaires 
-  FOR INSERT WITH CHECK (auth.uid() IN (
-    SELECT id FROM profiles WHERE role = 'trainer'
-  ));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaires' 
+        AND policyname = 'Trainers can create questionnaires'
+    ) THEN
+        CREATE POLICY "Trainers can create questionnaires" ON questionnaires 
+        FOR INSERT WITH CHECK (auth.uid() IN (
+            SELECT id FROM profiles WHERE role = 'trainer'
+        ));
+    END IF;
 
-CREATE POLICY "Users can view questionnaires they created or are assigned to" ON questionnaires 
-  FOR SELECT USING (
-    created_by = auth.uid() OR 
-    auth.uid() IN (
-      SELECT assigned_to FROM questionnaire_assignments WHERE questionnaire_id = id
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaires' 
+        AND policyname = 'Users can view questionnaires they created or are assigned to'
+    ) THEN
+        CREATE POLICY "Users can view questionnaires they created or are assigned to" ON questionnaires 
+        FOR SELECT USING (
+            created_by = auth.uid() OR 
+            auth.uid() IN (
+            SELECT assigned_to FROM questionnaire_assignments WHERE questionnaire_id = id
+            )
+        );
+    END IF;
 
-CREATE POLICY "Trainers can update their own questionnaires" ON questionnaires 
-  FOR UPDATE USING (created_by = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaires' 
+        AND policyname = 'Trainers can update their own questionnaires'
+    ) THEN
+        CREATE POLICY "Trainers can update their own questionnaires" ON questionnaires 
+        FOR UPDATE USING (created_by = auth.uid());
+    END IF;
 
-CREATE POLICY "Trainers can delete their own questionnaires" ON questionnaires 
-  FOR DELETE USING (created_by = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaires' 
+        AND policyname = 'Trainers can delete their own questionnaires'
+    ) THEN
+        CREATE POLICY "Trainers can delete their own questionnaires" ON questionnaires 
+        FOR DELETE USING (created_by = auth.uid());
+    END IF;
+END
+$$;
 
 -- Questions policies
-CREATE POLICY "Trainers can insert questions for their questionnaires" ON questions 
-  FOR INSERT WITH CHECK (
-    questionnaire_id IN (
-      SELECT id FROM questionnaires WHERE created_by = auth.uid()
-    )
-  );
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questions' 
+        AND policyname = 'Trainers can insert questions for their questionnaires'
+    ) THEN
+        CREATE POLICY "Trainers can insert questions for their questionnaires" ON questions 
+        FOR INSERT WITH CHECK (
+            questionnaire_id IN (
+            SELECT id FROM questionnaires WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Trainers can update questions for their questionnaires" ON questions 
-  FOR UPDATE USING (
-    questionnaire_id IN (
-      SELECT id FROM questionnaires WHERE created_by = auth.uid()
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questions' 
+        AND policyname = 'Trainers can update questions for their questionnaires'
+    ) THEN
+        CREATE POLICY "Trainers can update questions for their questionnaires" ON questions 
+        FOR UPDATE USING (
+            questionnaire_id IN (
+            SELECT id FROM questionnaires WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Trainers can delete questions for their questionnaires" ON questions 
-  FOR DELETE USING (
-    questionnaire_id IN (
-      SELECT id FROM questionnaires WHERE created_by = auth.uid()
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questions' 
+        AND policyname = 'Trainers can delete questions for their questionnaires'
+    ) THEN
+        CREATE POLICY "Trainers can delete questions for their questionnaires" ON questions 
+        FOR DELETE USING (
+            questionnaire_id IN (
+            SELECT id FROM questionnaires WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Users can view questions for their questionnaires" ON questions 
-  FOR SELECT USING (
-    questionnaire_id IN (
-      SELECT q.id FROM questionnaires q
-      WHERE q.created_by = auth.uid()
-      OR q.id IN (
-        SELECT a.questionnaire_id FROM questionnaire_assignments a
-        WHERE a.assigned_to = auth.uid()
-      )
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questions' 
+        AND policyname = 'Users can view questions for their questionnaires'
+    ) THEN
+        CREATE POLICY "Users can view questions for their questionnaires" ON questions 
+        FOR SELECT USING (
+            questionnaire_id IN (
+            SELECT q.id FROM questionnaires q
+            WHERE q.created_by = auth.uid()
+            OR q.id IN (
+                SELECT a.questionnaire_id FROM questionnaire_assignments a
+                WHERE a.assigned_to = auth.uid()
+            )
+            )
+        );
+    END IF;
+END
+$$;
 
 -- Assignments policies
-CREATE POLICY "Trainers can assign questionnaires" ON questionnaire_assignments 
-  FOR INSERT WITH CHECK (
-    assigned_by = auth.uid() AND
-    questionnaire_id IN (
-      SELECT id FROM questionnaires WHERE created_by = auth.uid()
-    )
-  );
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaire_assignments' 
+        AND policyname = 'Trainers can assign questionnaires'
+    ) THEN
+        CREATE POLICY "Trainers can assign questionnaires" ON questionnaire_assignments 
+        FOR INSERT WITH CHECK (
+            assigned_by = auth.uid() AND
+            questionnaire_id IN (
+            SELECT id FROM questionnaires WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Users can view their assignments" ON questionnaire_assignments 
-  FOR SELECT USING (
-    assigned_to = auth.uid() OR assigned_by = auth.uid()
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaire_assignments' 
+        AND policyname = 'Users can view their assignments'
+    ) THEN
+        CREATE POLICY "Users can view their assignments" ON questionnaire_assignments 
+        FOR SELECT USING (
+            assigned_to = auth.uid() OR assigned_by = auth.uid()
+        );
+    END IF;
 
-CREATE POLICY "Trainers can manage their assignments" ON questionnaire_assignments 
-  FOR UPDATE USING (assigned_by = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaire_assignments' 
+        AND policyname = 'Trainers can manage their assignments'
+    ) THEN
+        CREATE POLICY "Trainers can manage their assignments" ON questionnaire_assignments 
+        FOR UPDATE USING (assigned_by = auth.uid());
+    END IF;
 
-CREATE POLICY "Trainers can delete their assignments" ON questionnaire_assignments 
-  FOR DELETE USING (assigned_by = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'questionnaire_assignments' 
+        AND policyname = 'Trainers can delete their assignments'
+    ) THEN
+        CREATE POLICY "Trainers can delete their assignments" ON questionnaire_assignments 
+        FOR DELETE USING (assigned_by = auth.uid());
+    END IF;
+END
+$$;
 
 -- Responses policies
-CREATE POLICY "Users can submit their own responses" ON responses 
-  FOR INSERT WITH CHECK (user_id = auth.uid());
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'responses' 
+        AND policyname = 'Users can submit their own responses'
+    ) THEN
+        CREATE POLICY "Users can submit their own responses" ON responses 
+        FOR INSERT WITH CHECK (user_id = auth.uid());
+    END IF;
 
-CREATE POLICY "Users can view their own responses" ON responses 
-  FOR SELECT USING (
-    user_id = auth.uid() OR
-    assignment_id IN (
-      SELECT id FROM questionnaire_assignments WHERE assigned_by = auth.uid()
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'responses' 
+        AND policyname = 'Users can view their own responses'
+    ) THEN
+        CREATE POLICY "Users can view their own responses" ON responses 
+        FOR SELECT USING (
+            user_id = auth.uid() OR
+            assignment_id IN (
+            SELECT id FROM questionnaire_assignments WHERE assigned_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Users can update their own responses" ON responses 
-  FOR UPDATE USING (user_id = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'responses' 
+        AND policyname = 'Users can update their own responses'
+    ) THEN
+        CREATE POLICY "Users can update their own responses" ON responses 
+        FOR UPDATE USING (user_id = auth.uid());
+    END IF;
+END
+$$;
 
 -- ==========================================
 -- TRAINER-ATHLETE RELATIONSHIP
@@ -250,26 +454,54 @@ CREATE TABLE IF NOT EXISTS trainer_athletes (
 ALTER TABLE trainer_athletes ENABLE ROW LEVEL SECURITY;
 
 -- Policies for trainer_athletes table
-CREATE POLICY "Trainers can create connections" ON trainer_athletes
-  FOR INSERT WITH CHECK (
-    trainer_id = auth.uid() AND
-    auth.uid() IN (SELECT id FROM profiles WHERE role = 'trainer')
-  );
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'trainer_athletes' 
+        AND policyname = 'Trainers can create connections'
+    ) THEN
+        CREATE POLICY "Trainers can create connections" ON trainer_athletes
+        FOR INSERT WITH CHECK (
+            trainer_id = auth.uid() AND
+            auth.uid() IN (SELECT id FROM profiles WHERE role = 'trainer')
+        );
+    END IF;
 
-CREATE POLICY "Users can see their own connections" ON trainer_athletes
-  FOR SELECT USING (
-    trainer_id = auth.uid() OR athlete_id = auth.uid()
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'trainer_athletes' 
+        AND policyname = 'Users can see their own connections'
+    ) THEN
+        CREATE POLICY "Users can see their own connections" ON trainer_athletes
+        FOR SELECT USING (
+            trainer_id = auth.uid() OR athlete_id = auth.uid()
+        );
+    END IF;
 
-CREATE POLICY "Users can update their own connections" ON trainer_athletes
-  FOR UPDATE USING (
-    trainer_id = auth.uid() OR athlete_id = auth.uid()
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'trainer_athletes' 
+        AND policyname = 'Users can update their own connections'
+    ) THEN
+        CREATE POLICY "Users can update their own connections" ON trainer_athletes
+        FOR UPDATE USING (
+            trainer_id = auth.uid() OR athlete_id = auth.uid()
+        );
+    END IF;
 
-CREATE POLICY "Users can delete their own connections" ON trainer_athletes
-  FOR DELETE USING (
-    trainer_id = auth.uid() OR athlete_id = auth.uid()
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'trainer_athletes' 
+        AND policyname = 'Users can delete their own connections'
+    ) THEN
+        CREATE POLICY "Users can delete their own connections" ON trainer_athletes
+        FOR DELETE USING (
+            trainer_id = auth.uid() OR athlete_id = auth.uid()
+        );
+    END IF;
+END
+$$;
 
 -- ==========================================
 -- WORKOUTS SYSTEM
@@ -329,89 +561,308 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create trigger for workout timestamp updates
-CREATE TRIGGER update_workout_timestamp
-BEFORE UPDATE ON workouts
-FOR EACH ROW
-EXECUTE FUNCTION update_workout_updated_at();
+-- Check if trigger exists before creating it
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger 
+        WHERE tgname = 'update_workout_timestamp'
+    ) THEN
+        CREATE TRIGGER update_workout_timestamp
+        BEFORE UPDATE ON workouts
+        FOR EACH ROW
+        EXECUTE FUNCTION update_workout_updated_at();
+    END IF;
+END
+$$;
 
 -- Workout policies
-CREATE POLICY "Trainers can create workouts" ON workouts
-  FOR INSERT WITH CHECK (auth.uid() IN (
-    SELECT id FROM profiles WHERE role = 'trainer'
-  ));
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workouts' 
+        AND policyname = 'Trainers can create workouts'
+    ) THEN
+        CREATE POLICY "Trainers can create workouts" ON workouts
+        FOR INSERT WITH CHECK (auth.uid() IN (
+            SELECT id FROM profiles WHERE role = 'trainer'
+        ));
+    END IF;
 
-CREATE POLICY "Users can view workouts they created or are assigned to" ON workouts
-  FOR SELECT USING (
-    created_by = auth.uid() OR
-    auth.uid() IN (
-      SELECT assigned_to FROM workout_assignments WHERE workout_id = id
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workouts' 
+        AND policyname = 'Users can view workouts they created or are assigned to'
+    ) THEN
+        CREATE POLICY "Users can view workouts they created or are assigned to" ON workouts
+        FOR SELECT USING (
+            created_by = auth.uid() OR
+            auth.uid() IN (
+            SELECT assigned_to FROM workout_assignments WHERE workout_id = id
+            )
+        );
+    END IF;
 
-CREATE POLICY "Trainers can update their own workouts" ON workouts
-  FOR UPDATE USING (created_by = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workouts' 
+        AND policyname = 'Trainers can update their own workouts'
+    ) THEN
+        CREATE POLICY "Trainers can update their own workouts" ON workouts
+        FOR UPDATE USING (created_by = auth.uid());
+    END IF;
 
-CREATE POLICY "Trainers can delete their own workouts" ON workouts
-  FOR DELETE USING (created_by = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workouts' 
+        AND policyname = 'Trainers can delete their own workouts'
+    ) THEN
+        CREATE POLICY "Trainers can delete their own workouts" ON workouts
+        FOR DELETE USING (created_by = auth.uid());
+    END IF;
+END
+$$;
 
 -- Exercise policies
-CREATE POLICY "Trainers can insert exercises for their workouts" ON exercises
-  FOR INSERT WITH CHECK (
-    workout_id IN (
-      SELECT id FROM workouts WHERE created_by = auth.uid()
-    )
-  );
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'exercises' 
+        AND policyname = 'Trainers can insert exercises for their workouts'
+    ) THEN
+        CREATE POLICY "Trainers can insert exercises for their workouts" ON exercises
+        FOR INSERT WITH CHECK (
+            workout_id IN (
+            SELECT id FROM workouts WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Users can view exercises for workouts they can access" ON exercises
-  FOR SELECT USING (
-    workout_id IN (
-      SELECT w.id FROM workouts w
-      WHERE w.created_by = auth.uid()
-      OR w.id IN (
-        SELECT a.workout_id FROM workout_assignments a
-        WHERE a.assigned_to = auth.uid()
-      )
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'exercises' 
+        AND policyname = 'Users can view exercises for workouts they can access'
+    ) THEN
+        CREATE POLICY "Users can view exercises for workouts they can access" ON exercises
+        FOR SELECT USING (
+            workout_id IN (
+            SELECT w.id FROM workouts w
+            WHERE w.created_by = auth.uid()
+            OR w.id IN (
+                SELECT a.workout_id FROM workout_assignments a
+                WHERE a.assigned_to = auth.uid()
+            )
+            )
+        );
+    END IF;
 
-CREATE POLICY "Trainers can update exercises for their workouts" ON exercises
-  FOR UPDATE USING (
-    workout_id IN (
-      SELECT id FROM workouts WHERE created_by = auth.uid()
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'exercises' 
+        AND policyname = 'Trainers can update exercises for their workouts'
+    ) THEN
+        CREATE POLICY "Trainers can update exercises for their workouts" ON exercises
+        FOR UPDATE USING (
+            workout_id IN (
+            SELECT id FROM workouts WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Trainers can delete exercises for their workouts" ON exercises
-  FOR DELETE USING (
-    workout_id IN (
-      SELECT id FROM workouts WHERE created_by = auth.uid()
-    )
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'exercises' 
+        AND policyname = 'Trainers can delete exercises for their workouts'
+    ) THEN
+        CREATE POLICY "Trainers can delete exercises for their workouts" ON exercises
+        FOR DELETE USING (
+            workout_id IN (
+            SELECT id FROM workouts WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
+END
+$$;
 
 -- Workout assignment policies
-CREATE POLICY "Trainers can assign workouts" ON workout_assignments
-  FOR INSERT WITH CHECK (
-    assigned_by = auth.uid() AND
-    workout_id IN (
-      SELECT id FROM workouts WHERE created_by = auth.uid()
-    )
-  );
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workout_assignments' 
+        AND policyname = 'Trainers can assign workouts'
+    ) THEN
+        CREATE POLICY "Trainers can assign workouts" ON workout_assignments
+        FOR INSERT WITH CHECK (
+            assigned_by = auth.uid() AND
+            workout_id IN (
+            SELECT id FROM workouts WHERE created_by = auth.uid()
+            )
+        );
+    END IF;
 
-CREATE POLICY "Users can view their workout assignments" ON workout_assignments
-  FOR SELECT USING (
-    assigned_to = auth.uid() OR assigned_by = auth.uid()
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workout_assignments' 
+        AND policyname = 'Users can view their workout assignments'
+    ) THEN
+        CREATE POLICY "Users can view their workout assignments" ON workout_assignments
+        FOR SELECT USING (
+            assigned_to = auth.uid() OR assigned_by = auth.uid()
+        );
+    END IF;
 
-CREATE POLICY "Users can update their workout status" ON workout_assignments
-  FOR UPDATE USING (
-    assigned_to = auth.uid() OR assigned_by = auth.uid()
-  );
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workout_assignments' 
+        AND policyname = 'Users can update their workout status'
+    ) THEN
+        CREATE POLICY "Users can update their workout status" ON workout_assignments
+        FOR UPDATE USING (
+            assigned_to = auth.uid() OR assigned_by = auth.uid()
+        );
+    END IF;
 
-CREATE POLICY "Trainers can delete their workout assignments" ON workout_assignments
-  FOR DELETE USING (assigned_by = auth.uid());
+    IF NOT EXISTS (
+        SELECT FROM pg_policies 
+        WHERE tablename = 'workout_assignments' 
+        AND policyname = 'Trainers can delete their workout assignments'
+    ) THEN
+        CREATE POLICY "Trainers can delete their workout assignments" ON workout_assignments
+        FOR DELETE USING (assigned_by = auth.uid());
+    END IF;
+END
+$$;
 
 -- Create indexes for performance
 CREATE INDEX IF NOT EXISTS idx_exercises_workout_id ON exercises(workout_id);
 CREATE INDEX IF NOT EXISTS idx_workout_assignments_workout_id ON workout_assignments(workout_id);
-CREATE INDEX IF NOT EXISTS idx_workout_assignments_assigned_to ON workout_assignments(assigned_to); 
+CREATE INDEX IF NOT EXISTS idx_workout_assignments_assigned_to ON workout_assignments(assigned_to);
+
+-- ==========================================
+-- ADMIN FUNCTIONS
+-- ==========================================
+
+-- Helper function to check if current user has admin role
+CREATE OR REPLACE FUNCTION is_admin()
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  RETURN (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin';
+END;
+$$;
+
+-- Function to get user statistics for admin dashboard
+CREATE OR REPLACE FUNCTION get_admin_user_stats()
+RETURNS TABLE (
+  total_users bigint,
+  trainers bigint,
+  athletes bigint, 
+  admins bigint,
+  active_last_week bigint
+) 
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  -- Check if the current user is an admin
+  IF NOT is_admin() THEN
+    RAISE EXCEPTION 'Access denied: Admin role required';
+  END IF;
+
+  RETURN QUERY
+  SELECT
+    (SELECT COUNT(*) FROM profiles) as total_users,
+    (SELECT COUNT(*) FROM profiles WHERE role = 'trainer') as trainers,
+    (SELECT COUNT(*) FROM profiles WHERE role = 'athlete') as athletes,
+    (SELECT COUNT(*) FROM profiles WHERE role = 'admin') as admins,
+    (SELECT COUNT(*) FROM auth.users WHERE last_sign_in_at > (now() - interval '7 days')) as active_last_week;
+END;
+$$;
+
+-- Function to get content statistics for admin dashboard
+CREATE OR REPLACE FUNCTION get_admin_content_stats()
+RETURNS TABLE (
+  total_workouts bigint,
+  total_exercises bigint,
+  total_questionnaires bigint,
+  total_questions bigint,
+  assigned_workouts bigint,
+  completed_workouts bigint
+) 
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  -- Check if the current user is an admin
+  IF NOT is_admin() THEN
+    RAISE EXCEPTION 'Access denied: Admin role required';
+  END IF;
+
+  RETURN QUERY
+  SELECT
+    (SELECT COUNT(*) FROM workouts) as total_workouts,
+    (SELECT COUNT(*) FROM exercises) as total_exercises,
+    (SELECT COUNT(*) FROM questionnaires) as total_questionnaires,
+    (SELECT COUNT(*) FROM questions) as total_questions,
+    (SELECT COUNT(*) FROM workout_assignments) as assigned_workouts,
+    (SELECT COUNT(*) FROM workout_assignments WHERE status = 'completed') as completed_workouts;
+END;
+$$;
+
+-- Secure these functions to admin access only
+DO $$
+BEGIN
+    -- search_path settings
+    EXECUTE 'ALTER FUNCTION get_admin_user_stats() SET search_path = public, pg_temp';
+    EXECUTE 'ALTER FUNCTION get_admin_content_stats() SET search_path = public, pg_temp';
+
+    -- Revoke permissions
+    EXECUTE 'REVOKE ALL ON FUNCTION get_admin_user_stats() FROM public';
+    EXECUTE 'REVOKE ALL ON FUNCTION get_admin_content_stats() FROM public';
+
+    -- Grant permissions
+    EXECUTE 'GRANT EXECUTE ON FUNCTION get_admin_user_stats() TO authenticated';
+    EXECUTE 'GRANT EXECUTE ON FUNCTION get_admin_content_stats() TO authenticated';
+END
+$$;
+
+-- Function for admins to update user roles
+CREATE OR REPLACE FUNCTION admin_update_user_role(
+  user_id UUID,
+  new_role TEXT
+)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  -- Check if the current user is an admin
+  IF NOT is_admin() THEN
+    RAISE EXCEPTION 'Access denied: Admin role required';
+  END IF;
+  
+  -- Validate role
+  IF new_role NOT IN ('trainer', 'athlete', 'admin') THEN
+    RAISE EXCEPTION 'Invalid role: must be trainer, athlete, or admin';
+  END IF;
+  
+  -- Update the user's role
+  UPDATE profiles
+  SET role = new_role
+  WHERE id = user_id;
+  
+  RETURN FOUND;
+END;
+$$;
+
+-- Grant execute permission in a DO block
+DO $$
+BEGIN
+    EXECUTE 'GRANT EXECUTE ON FUNCTION admin_update_user_role(UUID, TEXT) TO authenticated';
+END
+$$; 

@@ -95,3 +95,40 @@ The application uses Supabase with the following main entities:
 ## License
 
 This project is licensed under the MIT License.
+
+## Admin Dashboard
+
+The Fitzio platform includes an admin dashboard for privileged users with administrative access. Admin users cannot be created through the regular registration form - they must be created directly in Supabase.
+
+### Creating an Admin User
+
+To create an admin user directly in Supabase:
+
+1. Create a user through the Supabase Authentication dashboard or using the Auth API
+2. After the user is created, insert a profile record with role 'admin' in the profiles table:
+
+```sql
+INSERT INTO profiles (id, email, role, username, first_name, last_name, created_at)
+VALUES (
+  'user-uuid-from-auth', -- The user UUID from auth.users
+  'admin@example.com',   -- The user's email
+  'admin',               -- Role must be 'admin'
+  'admin_username',      -- Optional username
+  'Admin',               -- Optional first name
+  'User',                -- Optional last name
+  now()                  -- Current timestamp
+);
+```
+
+3. Admin users can access the admin dashboard at `/dashboard/admin`
+
+### Admin Dashboard Features
+
+- View system-wide statistics
+- Manage all users
+- View all workouts and questionnaires
+- Access platform analytics
+
+## Development
+
+[Your existing development instructions]

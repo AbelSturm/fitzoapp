@@ -26,33 +26,40 @@ export const nodes = [
 	() => import('./nodes/22'),
 	() => import('./nodes/23'),
 	() => import('./nodes/24'),
-	() => import('./nodes/25')
+	() => import('./nodes/25'),
+	() => import('./nodes/26'),
+	() => import('./nodes/27'),
+	() => import('./nodes/28'),
+	() => import('./nodes/29')
 ];
 
 export const server_loads = [0,2];
 
 export const dictionary = {
-		"/": [5],
-		"/dashboard/athlete": [6,[2,3]],
-		"/dashboard/athlete/profile": [7,[2,3]],
-		"/dashboard/athlete/questionnaires": [8,[2,3]],
-		"/dashboard/athlete/questionnaires/[id]": [9,[2,3]],
-		"/dashboard/athlete/settings": [10,[2,3]],
-		"/dashboard/athlete/workouts": [11,[2,3]],
-		"/dashboard/athlete/workouts/[id]": [12,[2,3]],
-		"/dashboard/trainer": [13,[2,4]],
-		"/dashboard/trainer/athletes": [14,[2,4]],
-		"/dashboard/trainer/athletes/[id]": [15,[2,4]],
-		"/dashboard/trainer/questionnaires": [16,[2,4]],
-		"/dashboard/trainer/questionnaires/new": [19,[2,4]],
-		"/dashboard/trainer/questionnaires/[id]": [17,[2,4]],
-		"/dashboard/trainer/questionnaires/[id]/edit": [18,[2,4]],
-		"/dashboard/trainer/settings": [20,[2,4]],
-		"/dashboard/trainer/workouts": [21,[2,4]],
-		"/dashboard/trainer/workouts/new": [23,[2,4]],
-		"/dashboard/trainer/workouts/[id]": [22,[2,4]],
-		"/login": [24],
-		"/register": [25]
+		"/": [6],
+		"/dashboard/admin": [7,[2,3]],
+		"/dashboard/admin/users": [8,[2,3]],
+		"/dashboard/admin/users/[id]": [9,[2,3]],
+		"/dashboard/athlete": [10,[2,4]],
+		"/dashboard/athlete/profile": [11,[2,4]],
+		"/dashboard/athlete/questionnaires": [12,[2,4]],
+		"/dashboard/athlete/questionnaires/[id]": [13,[2,4]],
+		"/dashboard/athlete/settings": [14,[2,4]],
+		"/dashboard/athlete/workouts": [15,[2,4]],
+		"/dashboard/athlete/workouts/[id]": [16,[2,4]],
+		"/dashboard/trainer": [17,[2,5]],
+		"/dashboard/trainer/athletes": [18,[2,5]],
+		"/dashboard/trainer/athletes/[id]": [19,[2,5]],
+		"/dashboard/trainer/questionnaires": [20,[2,5]],
+		"/dashboard/trainer/questionnaires/new": [23,[2,5]],
+		"/dashboard/trainer/questionnaires/[id]": [21,[2,5]],
+		"/dashboard/trainer/questionnaires/[id]/edit": [22,[2,5]],
+		"/dashboard/trainer/settings": [24,[2,5]],
+		"/dashboard/trainer/workouts": [25,[2,5]],
+		"/dashboard/trainer/workouts/new": [27,[2,5]],
+		"/dashboard/trainer/workouts/[id]": [26,[2,5]],
+		"/login": [28],
+		"/register": [29]
 	};
 
 export const hooks = {

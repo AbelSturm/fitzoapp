@@ -92,7 +92,8 @@
             {
               id: data.user.id,
               email: data.user.email,
-              role: role,
+              // Ensure role can only be trainer or athlete
+              role: role === 'trainer' || role === 'athlete' ? role : 'athlete',
               username: username || null,
               first_name: firstName || null,
               last_name: lastName || null
