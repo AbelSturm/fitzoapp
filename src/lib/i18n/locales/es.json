@@ -96,7 +96,10 @@
     "no_account": "¿No tienes una cuenta?",
     "user_already_exists": "Este correo ya está registrado. Por favor inicia sesión o utiliza un correo diferente.",
     "username_taken": "Este nombre de usuario ya está en uso. Por favor, elige otro.",
-    "registration_success": "¡Tu cuenta ha sido creada exitosamente! Por favor inicia sesión con tus credenciales."
+    "registration_success": "¡Tu cuenta ha sido creada exitosamente! Por favor inicia sesión con tus credenciales.",
+    "privacy_policy_agreement": "Acepto la",
+    "privacy_policy": "Política de Privacidad",
+    "privacy_policy_required": "Debes aceptar la política de privacidad para crear una cuenta."
   },
   "dashboard": {
     "trainer": {

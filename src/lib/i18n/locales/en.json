@@ -96,7 +96,10 @@
     "no_account": "Don't have an account?",
     "user_already_exists": "This email is already registered. Please log in instead or use a different email.",
     "username_taken": "This username is already taken. Please choose another one.",
-    "registration_success": "Your account has been successfully created! Please log in with your credentials."
+    "registration_success": "Your account has been successfully created! Please log in with your credentials.",
+    "privacy_policy_agreement": "I accept the",
+    "privacy_policy": "Privacy Policy",
+    "privacy_policy_required": "You must accept the privacy policy to create an account."
   },
   "dashboard": {
     "trainer": {

@@ -13,6 +13,7 @@
   let role = $page.url.searchParams.get('role') || '';
   let loading = false;
   let error: string | null = null;
+  let privacyPolicyAccepted = false;
 
   // Check for existing session on mount
   onMount(async () => {
@@ -55,6 +56,11 @@
     try {
       loading = true;
       error = null;
+
+      // Check if privacy policy is accepted
+      if (!privacyPolicyAccepted) {
+        throw new Error($_('auth.privacy_policy_required') || 'You must accept the privacy policy to create an account.');
+      }
 
       // Validate username
       if (username) {
@@ -238,6 +244,31 @@
               <option value="trainer">{$_('auth.trainer')}</option>
               <option value="athlete">{$_('auth.athlete')}</option>
             </select>
+          </div>
+        </div>
+
+        <!-- Privacy Policy Agreement -->
+        <div class="mt-4">
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <input
+                id="privacy_policy"
+                name="privacy_policy"
+                type="checkbox"
+                bind:checked={privacyPolicyAccepted}
+                class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              />
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="privacy_policy" class="font-medium text-gray-700">
+                {$_('auth.privacy_policy_agreement', {
+                  default: 'I accept the '
+                })}
+                <a href="/privacy" target="_blank" class="text-purple-600 hover:text-purple-500">
+                  {$_('auth.privacy_policy', { default: 'Privacy Policy' })}
+                </a>
+              </label>
+            </div>
           </div>
         </div>
       </div>
