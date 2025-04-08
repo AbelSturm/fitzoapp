@@ -18,6 +18,21 @@
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	],
+	"/dashboard/admin/questionnaires": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/admin/questionnaires/[id]": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/admin/statistics": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
 	"/dashboard/admin/users": [
 		"src/routes/dashboard/+layout.server.ts",
 		"src/routes/+layout.ts",
