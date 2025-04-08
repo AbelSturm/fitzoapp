@@ -26,8 +26,17 @@
         return;
       }
       
-      // Load workout assignments
-      assignments = await workoutsService.getWorkoutAssignments(workoutId);
+      // Load workout assignments directly
+      const { data: assignmentsData, error: assignmentsError } = await supabase
+        .from('workout_assignments')
+        .select('*')
+        .eq('workout_id', workoutId);
+        
+      if (!assignmentsError) {
+        assignments = assignmentsData || [];
+      } else {
+        console.error('Error loading workout assignments:', assignmentsError);
+      }
       
     } catch (err: any) {
       console.error('Error loading workout details:', err);

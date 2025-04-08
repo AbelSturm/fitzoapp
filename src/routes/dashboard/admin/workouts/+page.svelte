@@ -5,7 +5,17 @@
   import Button from '$lib/components/ui/Button.svelte';
   import { workoutsService, type Workout } from '$lib/services/workouts';
 
-  let workouts: Workout[] = [];
+  // Define extended workout type to include exercise_count
+  interface WorkoutWithCount {
+    id: string;
+    title: string;
+    description?: string;
+    created_at?: string;
+    created_by?: string;
+    exercise_count?: number;
+  }
+
+  let workouts: WorkoutWithCount[] = [];
   let loading = true;
   let error: string | null = null;
   let searchTerm = '';
@@ -22,13 +32,30 @@
       loading = true;
       error = null;
 
-      // Using RPC function to get all workouts in the system
+      // Query workouts directly from the workouts table
       const { data, error: fetchError } = await supabase
-        .rpc('get_all_workouts');
+        .from('workouts')
+        .select('id, title, description, created_at, created_by')
+        .order('created_at', { ascending: false });
       
       if (fetchError) throw fetchError;
       
       workouts = data || [];
+
+      // If successful, get exercise counts for each workout
+      if (!fetchError && data) {
+        // Get exercise counts in a separate query
+        for (const workout of data) {
+          const { count, error: countError } = await supabase
+            .from('exercises')
+            .select('*', { count: 'exact', head: true })
+            .eq('workout_id', workout.id);
+            
+          if (!countError) {
+            (workout as WorkoutWithCount).exercise_count = count || 0;
+          }
+        }
+      }
     } catch (err: any) {
       console.error('Error loading workouts:', err);
       error = err.message || 'Failed to load workouts';
