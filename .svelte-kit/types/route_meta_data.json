@@ -153,6 +153,10 @@
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	],
+	"/privacy": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
 	"/register": [
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"

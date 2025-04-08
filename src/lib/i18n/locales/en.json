@@ -175,5 +175,77 @@
         }
       }
     }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "section1": {
+      "title": "1. Information We Collect",
+      "intro": "At Fitzio, we are committed to protecting your privacy. We collect the following information:",
+      "item1": "Registration information (name, email, password)",
+      "item2": "Profile information (username, role, physical data)",
+      "item3": "Training data and physical progress",
+      "item4": "App usage information"
+    },
+    "section2": {
+      "title": "2. How We Use Your Information",
+      "intro": "We use the collected information to:",
+      "item1": "Provide and improve our services",
+      "item2": "Personalize your training experience",
+      "item3": "Enable communication between trainers and athletes",
+      "item4": "Analyze trends and improve the platform",
+      "item5": "Send important notifications about your account"
+    },
+    "section3": {
+      "title": "3. Data Sharing",
+      "intro": "We do not sell your personal information to third parties. We share information in the following circumstances:",
+      "item1": "Between trainers and athletes who are connected on the platform",
+      "item2": "With service providers who help us operate the platform",
+      "item3": "When required by law or to protect our rights"
+    },
+    "section4": {
+      "title": "4. Data Security",
+      "content": "We implement technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure or destruction."
+    },
+    "section5": {
+      "title": "5. Your Rights",
+      "intro": "As a user, you have the right to:",
+      "item1": "Access your personal data",
+      "item2": "Correct inaccurate information",
+      "item3": "Delete your account and associated data",
+      "item4": "Restrict certain data processing",
+      "item5": "Request a copy of your data"
+    },
+    "section6": {
+      "title": "6. Cookies and Similar Technologies",
+      "content": "We use cookies and similar technologies to improve your experience, understand how you use our services, and personalize content."
+    },
+    "section7": {
+      "title": "7. Changes to This Policy",
+      "content": "We may update this privacy policy periodically. We will notify you of significant changes through a notice on our application or by email."
+    },
+    "section8": {
+      "title": "8. Contact",
+      "content": "If you have questions about this privacy policy or how we handle your data, contact us at:"
+    },
+    "last_updated": "Last updated:"
+  },
+  "error": {
+    "404_title": "Page Not Found",
+    "404_message": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    "generic_title": "An Error Occurred",
+    "generic_message": "Something went wrong. Please try again later or contact support if the problem persists.",
+    "back_home": "Back to Home",
+    "support_text": "If you need help, please email us at:"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name_label": "Name",
+    "email_label": "Email",
+    "message_label": "Message",
+    "send_button": "Send Message",
+    "sending": "Sending...",
+    "success_message": "Your message has been sent! We will get back to you as soon as possible.",
+    "error_message": "There was an error sending your message. Please try again later.",
+    "other_ways_title": "Other Ways to Connect"
   }
 }

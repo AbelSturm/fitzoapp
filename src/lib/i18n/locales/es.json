@@ -175,5 +175,77 @@
         }
       }
     }
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "section1": {
+      "title": "1. Información que Recopilamos",
+      "intro": "En Fitzio, nos comprometemos a proteger tu privacidad. Recopilamos la siguiente información:",
+      "item1": "Información de registro (nombre, correo electrónico, contraseña)",
+      "item2": "Información de perfil (nombre de usuario, rol, datos físicos)",
+      "item3": "Datos de entrenamiento y progreso físico",
+      "item4": "Información de uso de la aplicación"
+    },
+    "section2": {
+      "title": "2. Cómo Utilizamos tu Información",
+      "intro": "Utilizamos la información recopilada para:",
+      "item1": "Proporcionar y mejorar nuestros servicios",
+      "item2": "Personalizar tu experiencia de entrenamiento",
+      "item3": "Permitir la comunicación entre entrenadores y atletas",
+      "item4": "Analizar tendencias y mejorar la plataforma",
+      "item5": "Enviar notificaciones importantes sobre tu cuenta"
+    },
+    "section3": {
+      "title": "3. Compartición de Datos",
+      "intro": "No vendemos tu información personal a terceros. Compartimos información en las siguientes circunstancias:",
+      "item1": "Entre entrenadores y atletas que están conectados en la plataforma",
+      "item2": "Con proveedores de servicios que nos ayudan a operar la plataforma",
+      "item3": "Cuando sea requerido por ley o para proteger nuestros derechos"
+    },
+    "section4": {
+      "title": "4. Seguridad de Datos",
+      "content": "Implementamos medidas de seguridad técnicas y organizativas para proteger tus datos personales contra acceso no autorizado, alteración, divulgación o destrucción."
+    },
+    "section5": {
+      "title": "5. Tus Derechos",
+      "intro": "Como usuario, tienes derecho a:",
+      "item1": "Acceder a tus datos personales",
+      "item2": "Corregir información inexacta",
+      "item3": "Eliminar tu cuenta y datos asociados",
+      "item4": "Restringir ciertos procesamientos de datos",
+      "item5": "Solicitar una copia de tus datos"
+    },
+    "section6": {
+      "title": "6. Cookies y Tecnologías Similares",
+      "content": "Utilizamos cookies y tecnologías similares para mejorar tu experiencia, entender cómo utilizas nuestros servicios y personalizar el contenido."
+    },
+    "section7": {
+      "title": "7. Cambios a esta Política",
+      "content": "Podemos actualizar esta política de privacidad periódicamente. Te notificaremos sobre cambios significativos mediante un aviso en nuestra aplicación o por correo electrónico."
+    },
+    "section8": {
+      "title": "8. Contacto",
+      "content": "Si tienes preguntas sobre esta política de privacidad o sobre cómo manejamos tus datos, contáctanos en:"
+    },
+    "last_updated": "Última actualización:"
+  },
+  "error": {
+    "404_title": "Página No Encontrada",
+    "404_message": "La página que estás buscando puede haber sido eliminada, su nombre ha cambiado o no está disponible temporalmente.",
+    "generic_title": "Ocurrió un Error",
+    "generic_message": "Algo salió mal. Por favor, inténtalo de nuevo más tarde o contacta con soporte si el problema persiste.",
+    "back_home": "Volver al Inicio",
+    "support_text": "Si necesitas ayuda, envíanos un correo electrónico a:"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "name_label": "Nombre",
+    "email_label": "Correo Electrónico",
+    "message_label": "Mensaje",
+    "send_button": "Enviar Mensaje",
+    "sending": "Enviando...",
+    "success_message": "¡Tu mensaje ha sido enviado! Nos pondremos en contacto contigo lo antes posible.",
+    "error_message": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo más tarde.",
+    "other_ways_title": "Otras Formas de Conectar"
   }
 }

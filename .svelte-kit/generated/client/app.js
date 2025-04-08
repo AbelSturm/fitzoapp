@@ -35,7 +35,8 @@ export const nodes = [
 	() => import('./nodes/31'),
 	() => import('./nodes/32'),
 	() => import('./nodes/33'),
-	() => import('./nodes/34')
+	() => import('./nodes/34'),
+	() => import('./nodes/35')
 ];
 
 export const server_loads = [0,2];
@@ -69,7 +70,8 @@ export const dictionary = {
 		"/dashboard/trainer/workouts/new": [32,[2,5]],
 		"/dashboard/trainer/workouts/[id]": [31,[2,5]],
 		"/login": [33],
-		"/register": [34]
+		"/privacy": [34],
+		"/register": [35]
 	};
 
 export const hooks = {
