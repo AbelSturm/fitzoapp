@@ -43,6 +43,14 @@
     }
   ];
 
+  // Determine if mobile menu is open
+  let isMobileMenuOpen = false;
+  
+  // Function to toggle mobile menu
+  function toggleMobileMenu() {
+    isMobileMenuOpen = !isMobileMenuOpen;
+  }
+
   // Handle user logout
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -54,70 +62,202 @@
   }
 </script>
 
-<div class="bg-purple-900 text-white h-screen w-64 flex flex-col shadow-xl fixed z-10 top-0 left-0 md:sticky">
-  <!-- Logo area -->
-  <div class="p-6 border-b border-purple-800">
-    <h2 class="text-xl font-bold">Fitzio Admin</h2>
-  </div>
-  
-  <!-- Navigation -->
-  <nav class="flex-1 overflow-y-auto py-4">
-    <ul class="space-y-1">
-      {#each navItems as item}
-        <li>
-          <a 
-            href={item.path} 
-            class="flex items-center px-6 py-3 text-gray-100 hover:bg-purple-800 {$page.url.pathname === item.path ? 'bg-purple-800 border-r-4 border-white' : ''}"
+<!-- Desktop Sidebar -->
+<div class="hidden md:block md:fixed md:inset-y-0 left-0 md:w-72 z-10">
+  <div class="bg-purple-900 text-white h-full flex flex-col shadow-xl">
+    <!-- Logo area -->
+    <div class="p-6 border-b border-purple-800">
+      <h2 class="text-xl font-bold">Fitzio Admin</h2>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="flex-1 overflow-y-auto py-4">
+      <ul class="space-y-1">
+        {#each navItems as item}
+          <li>
+            <a 
+              href={item.path} 
+              class="flex items-center px-6 py-3 text-gray-100 hover:bg-purple-800 {$page.url.pathname === item.path ? 'bg-purple-800 border-r-4 border-white' : ''}"
+            >
+              <span class="mr-3">
+                {@html item.icon}
+              </span>
+              {item.label}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </nav>
+    
+    <!-- User controls -->
+    <div class="p-4 border-t border-purple-800">
+      <!-- Language selector -->
+      <div class="mb-4">
+        <label for="language-select" class="block text-sm font-medium text-gray-100 mb-2">
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+            Language
+          </div>
+        </label>
+        <div class="relative group">
+          <select 
+            id="language-select"
+            bind:value={$locale} 
+            on:change={handleLanguageChange}
+            class="w-full appearance-none pl-4 pr-10 py-2.5 text-sm rounded-lg bg-purple-800/40 backdrop-blur-sm border border-white/20 text-white shadow-lg hover:bg-purple-800/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-200"
           >
-            <span class="mr-3">
-              {@html item.icon}
-            </span>
-            {item.label}
-          </a>
-        </li>
-      {/each}
-    </ul>
-  </nav>
-  
-  <!-- User controls -->
-  <div class="p-4 border-t border-purple-800">
-    <!-- Language selector -->
-    <div class="mb-4">
-      <label for="language-select" class="block text-sm font-medium text-gray-100 mb-2">
-        <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-          </svg>
-          Language
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="ca">Català</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
-      </label>
-      <div class="relative group">
-        <select 
-          id="language-select"
-          bind:value={$locale} 
-          on:change={handleLanguageChange}
-          class="w-full appearance-none pl-4 pr-10 py-2.5 text-sm rounded-lg bg-purple-800/40 backdrop-blur-sm border border-white/20 text-white shadow-lg hover:bg-purple-800/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-200"
+      </div>
+      
+      <button 
+        on:click={handleLogout}
+        class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-purple-700 rounded-lg hover:bg-purple-600 focus:outline-none"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Simplified mobile header -->
+<div class="md:hidden fixed top-0 left-0 right-0 z-20 bg-white shadow-sm">
+  <div class="px-4 flex items-center justify-between h-16">
+    <button 
+      type="button" 
+      class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-purple-900 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+      on:click={toggleMobileMenu}
+    >
+      <span class="sr-only">Open main menu</span>
+      <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    
+    <div class="flex items-center">
+      <div class="bg-purple-800 p-1.5 rounded-lg shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <span class="text-purple-900 text-lg font-bold ml-2">Fitzio Admin</span>
+    </div>
+    
+    <div class="w-10"></div> <!-- Spacer to balance the layout -->
+  </div>
+</div>
+
+<!-- Mobile menu overlay -->
+{#if isMobileMenuOpen}
+  <div 
+    class="md:hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-30 transition-opacity duration-300"
+    on:click={toggleMobileMenu}
+  ></div>
+  
+  <!-- Mobile sidebar -->
+  <div 
+    class="md:hidden fixed inset-y-0 left-0 w-72 max-w-[80%] bg-gradient-to-b from-purple-900 to-purple-700 shadow-xl z-40 
+           transform transition-transform duration-300 ease-in-out {isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}"
+  >
+    <div class="flex flex-col h-full">
+      <!-- Close button -->
+      <div class="absolute top-3 right-3">
+        <button 
+          type="button" 
+          class="p-2 rounded-full bg-purple-800 text-white hover:bg-purple-700 focus:outline-none transition-colors duration-200"
+          on:click={toggleMobileMenu}
         >
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="ca">Català</option>
-        </select>
-        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
+        </button>
+      </div>
+      
+      <!-- Sidebar content -->
+      <div class="flex-1 flex flex-col pt-16 pb-6 overflow-y-auto">
+        <div class="flex items-center justify-center px-6 mb-8">
+          <div class="flex items-center space-x-2">
+            <div class="bg-white p-2 rounded-lg shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-purple-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <span class="text-white text-xl font-bold">Fitzio Admin</span>
+          </div>
+        </div>
+        
+        <nav class="flex-1 px-4 space-y-2">
+          {#each navItems as item}
+            <a 
+              href={item.path} 
+              class="group flex items-center px-4 py-3 text-base font-medium rounded-lg transition-all duration-200 
+                    {$page.url.pathname === item.path 
+                      ? 'bg-white text-purple-900 shadow-md transform translate-x-1' 
+                      : 'text-purple-100 hover:bg-purple-800 hover:text-white'}"
+              on:click={toggleMobileMenu}
+            >
+              <div class="transition-transform duration-200 {$page.url.pathname === item.path ? 'scale-110' : 'group-hover:scale-110'}">
+                {@html item.icon}
+              </div>
+              <span class="ml-4">{item.label}</span>
+            </a>
+          {/each}
+        </nav>
+        
+        <div class="px-6 mt-6">
+          <!-- Language selector -->
+          <div class="mb-4">
+            <label for="mobile-language-select" class="block text-sm font-medium text-gray-100 mb-2">
+              <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                Language
+              </div>
+            </label>
+            <div class="relative group">
+              <select 
+                id="mobile-language-select"
+                bind:value={$locale} 
+                on:change={handleLanguageChange}
+                class="w-full appearance-none pl-4 pr-10 py-2.5 text-sm rounded-lg bg-purple-800/40 backdrop-blur-sm border border-white/20 text-white shadow-lg hover:bg-purple-800/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-200"
+              >
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ca">Català</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          <button 
+            class="w-full flex items-center justify-center px-4 py-3 text-base font-medium rounded-lg text-purple-100 hover:bg-purple-800 hover:text-white transition-all duration-200"
+            on:click={handleLogout}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Logout
+          </button>
         </div>
       </div>
     </div>
-    
-    <button 
-      on:click={handleLogout}
-      class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-purple-700 rounded-lg hover:bg-purple-600 focus:outline-none"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-      </svg>
-      Logout
-    </button>
   </div>
-</div> 
+{/if} 
