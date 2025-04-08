@@ -14,6 +14,13 @@
     created_at?: string;
     created_by?: string;
     exercise_count?: number;
+    trainer_profile?: {
+      id?: string;
+      first_name?: string;
+      last_name?: string;
+      username?: string;
+      email?: string;
+    };
   }
 
   let workouts: WorkoutWithCount[] = [];
@@ -117,7 +124,8 @@
   });
 
   // Format date
-  function formatDate(dateString: string): string {
+  function formatDate(dateString?: string): string {
+    if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('es', {
       year: 'numeric',
@@ -128,7 +136,7 @@
 </script>
 
 <div class="max-w-7xl mx-auto">
-  <h1 class="text-3xl font-bold mb-6">{$_('dashboard.admin.workouts.title', { default: 'Workout Management' })}</h1>
+  <h1 class="text-3xl font-bold mb-6">{$_('dashboard.admin.workouts_title', { default: 'Workout Management' })}</h1>
 
   {#if error}
     <div class="bg-red-100 border-l-4 border-red-500 p-4 mb-6">
@@ -146,7 +154,7 @@
       <div class="p-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
           <div class="flex-1 min-w-0">
-            <label for="search" class="sr-only">{$_('dashboard.admin.workouts.search', { default: 'Search workouts' })}</label>
+            <label for="search" class="sr-only">{$_('dashboard.admin.workouts_search', { default: 'Search workouts' })}</label>
             <div class="relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -157,7 +165,7 @@
                 id="search"
                 type="text"
                 bind:value={searchTerm}
-                placeholder={$_('dashboard.admin.workouts.search_placeholder', { default: 'Search workouts by title or trainer' })}
+                placeholder={$_('dashboard.admin.workouts_search_placeholder', { default: 'Search workouts by title or trainer' })}
                 class="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm"
               />
             </div>
@@ -184,7 +192,7 @@
         
         <div class="mt-4 flex items-center justify-between flex-wrap gap-2">
           <div class="text-sm text-gray-500">
-            {$_('dashboard.admin.workouts.found', { default: `${filteredWorkouts.length} workouts found` })}
+            {$_('dashboard.admin.workouts_found', { default: `${filteredWorkouts.length} workouts found` })}
           </div>
           
           <div class="flex space-x-2">
@@ -219,17 +227,17 @@
       </div>
     {:else if filteredWorkouts.length === 0}
       <div class="p-8 text-center text-gray-500">
-        {$_('dashboard.admin.workouts.no_workouts', { default: 'No workouts found matching your filters.' })}
+        {$_('dashboard.admin.workouts_no_workouts', { default: 'No workouts found matching your filters.' })}
       </div>
     {:else}
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts.table.title', { default: 'Title' })}</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts.table.trainer', { default: 'Trainer' })}</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts.table.created', { default: 'Created' })}</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts.table.exercises', { default: 'Exercises' })}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts_table_title', { default: 'Title' })}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts_table_trainer', { default: 'Trainer' })}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts_table_created', { default: 'Created' })}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.workouts_table_exercises', { default: 'Exercises' })}</th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.table.actions', { default: 'Actions' })}</th>
             </tr>
           </thead>
@@ -255,7 +263,7 @@
                         {workout.trainer_profile.email}
                       {/if}
                     {:else}
-                      {$_('dashboard.admin.workouts.unknown', { default: 'Unknown' })}
+                      {$_('dashboard.admin.workouts_unknown', { default: 'Unknown' })}
                     {/if}
                   </div>
                 </td>

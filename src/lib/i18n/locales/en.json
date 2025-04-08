@@ -139,7 +139,7 @@
     "admin": {
       "title": "Admin Dashboard",
       "content_statistics": "Content Statistics",
-      "workouts": "Workouts",
+      "workouts_title": "Workouts",
       "questionnaires": "Questionnaires",
       "quick_actions": "Quick Actions",
       "manage_users": "Manage Users",

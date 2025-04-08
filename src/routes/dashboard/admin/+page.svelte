@@ -206,7 +206,7 @@
         <h3 class="text-lg font-semibold mb-4">{$_('dashboard.admin.content_statistics', { default: 'Content Statistics' })}</h3>
         <div class="space-y-4">
           <div class="flex justify-between items-center">
-            <span class="text-gray-600">{$_('dashboard.admin.workouts', { default: 'Workouts' })}</span>
+            <span class="text-gray-600">{$_('dashboard.admin.workouts_title', { default: 'Workouts' })}</span>
             <span class="font-bold">
               {#if loading}
                 <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
