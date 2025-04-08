@@ -2,7 +2,9 @@ import { supabase } from '$lib/supabaseClient';
 
 export interface Athlete {
   id: string;
-  name: string;
+  first_name?: string;
+  last_name?: string;
+  name?: string;
   email: string;
   avatar_url?: string;
   created_at?: string;
@@ -23,21 +25,48 @@ export const athletesService = {
    * 
    * @returns Array of athletes
    */
-  async getTrainerAthletes(): Promise<Athlete[]> {
+  async getTrainerAthletes(trainerId?: string): Promise<Athlete[]> {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('User not authenticated');
-
-      // Use the RPC function to get the athletes for this trainer
-      const { data, error } = await supabase.rpc('get_trainer_athletes', { 
-        trainer_uuid: user.id 
-      });
+      if (!trainerId) {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error('User not authenticated');
+        trainerId = user.id;
+      }
+      
+      const { data, error } = await supabase
+        .rpc('get_trainer_athletes', { trainer_id: trainerId });
       
       if (error) throw error;
-      return data || [];
+      
+      // Interface to type the query result
+      interface TrainerAthleteResult {
+        athlete_id: string;
+        created_at: string;
+        profiles: {
+          id: string;
+          first_name: string | null;
+          last_name: string | null;
+          email: string;
+        };
+      }
+      
+      // Transform the data to match our Athlete interface
+      const athletes: Athlete[] = data ? data.map((item: any) => {
+        const profile = item.profiles;
+        return {
+          id: item.athlete_id,
+          first_name: profile.first_name ?? undefined,
+          last_name: profile.last_name ?? undefined,
+          name: `${profile.first_name || ''} ${profile.last_name || ''}`.trim(),
+          email: profile.email,
+          created_at: item.created_at
+        };
+      }) : [];
+      
+      return athletes;
     } catch (error) {
       console.error('Error getting trainer athletes:', error);
-      return [];
+      throw error;
     }
   },
 
@@ -175,18 +204,27 @@ export const athletesService = {
       
       let query = supabase
         .from('profiles')
-        .select('id, name, email, created_at')
+        .select('id, first_name, last_name, email, created_at')
         .eq('role', 'athlete');
       
       // Add search if provided
       if (search) {
-        query = query.or(`name.ilike.%${search}%,email.ilike.%${search}%`);
+        query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%,email.ilike.%${search}%`);
       }
       
       const { data, error } = await query;
       
       if (error) throw error;
-      return data || [];
+      
+      // Transform the data to include the name field
+      return data ? data.map(profile => ({
+        id: profile.id,
+        first_name: profile.first_name || undefined,
+        last_name: profile.last_name || undefined,
+        name: `${profile.first_name || ''} ${profile.last_name || ''}`.trim(),
+        email: profile.email,
+        created_at: profile.created_at
+      })) : [];
     } catch (error) {
       console.error('Error searching athletes:', error);
       return [];
