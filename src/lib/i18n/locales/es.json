@@ -85,7 +85,7 @@
     "trainer": "Entrenador",
     "athlete": "Atleta",
     "admin": "Administrador",
-    "role": {
+    "roles": {
       "admin": "Administrador"
     },
     "create_account": "Crear cuenta",
@@ -160,7 +160,7 @@
         "created": "Creado",
         "actions": "Acciones"
       },
-      "workouts": {
+      "workouts_page": {
         "title": "Gestión de Entrenamientos",
         "search": "Buscar entrenamientos",
         "search_placeholder": "Buscar entrenamientos por título o entrenador",

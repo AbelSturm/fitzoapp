@@ -6,7 +6,15 @@
   import { _ } from 'svelte-i18n';
 
   // Stats for dashboard
-  let stats = {
+  interface Stats {
+    totalUsers: number;
+    trainers: number;
+    athletes: number;
+    workouts: number;
+    questionnaires: number;
+  }
+
+  let stats: Stats = {
     totalUsers: 0,
     trainers: 0,
     athletes: 0,
@@ -16,9 +24,38 @@
 
   let loading = true;
   let error: string | null = null;
+  let dbStatus: string = "Not checked";
+
+  // Function to check database connection
+  async function checkDatabaseConnection() {
+    try {
+      // Test a simple query
+      const { data, error: testError } = await supabase
+        .from('profiles')
+        .select('id')
+        .limit(1);
+      
+      if (testError) {
+        dbStatus = `Connection error: ${testError.message}`;
+        console.error('Database connection error:', testError);
+        return false;
+      }
+      
+      dbStatus = "Connected successfully";
+      return true;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      dbStatus = `Connection test failed: ${errorMessage}`;
+      console.error('Database connection test failed:', errorMessage);
+      return false;
+    }
+  }
 
   // Load dashboard stats
   onMount(async () => {
+    // First check connection
+    await checkDatabaseConnection();
+    
     try {
       // Count users by role
       const { count: trainerCount, error: trainerError } = await supabase
@@ -38,21 +75,41 @@
       stats.athletes = athleteCount || 0;
       stats.totalUsers = stats.trainers + stats.athletes;
       
-      // Count workouts
-      const { count: workoutCount, error: workoutError } = await supabase
-        .from('workouts')
-        .select('*', { count: 'exact', head: true });
+      // Count workouts - using improved query
+      try {
+        const { data: workoutsData, error: workoutError } = await supabase
+          .from('workouts')
+          .select('id');
+        
+        if (workoutError) {
+          console.error('Workout count error:', workoutError);
+          // Don't set error here to avoid blocking other stats
+        } else {
+          stats.workouts = Array.isArray(workoutsData) ? workoutsData.length : 0;
+          console.log(`Found ${stats.workouts} workouts`);
+        }
+      } catch (workoutErr) {
+        console.error('Workout fetch error:', workoutErr);
+        // Don't set error here to avoid blocking other stats
+      }
       
-      if (workoutError) throw workoutError;
-      stats.workouts = workoutCount || 0;
-      
-      // Count questionnaires
-      const { count: questionnaireCount, error: questionnaireError } = await supabase
-        .from('questionnaires')
-        .select('*', { count: 'exact', head: true });
-      
-      if (questionnaireError) throw questionnaireError;
-      stats.questionnaires = questionnaireCount || 0;
+      // Count questionnaires - using improved query
+      try {
+        const { data: questionnairesData, error: questionnaireError } = await supabase
+          .from('questionnaires')
+          .select('id');
+        
+        if (questionnaireError) {
+          console.error('Questionnaire count error:', questionnaireError);
+          // Don't set error here to avoid blocking other stats
+        } else {
+          stats.questionnaires = Array.isArray(questionnairesData) ? questionnairesData.length : 0;
+          console.log(`Found ${stats.questionnaires} questionnaires`);
+        }
+      } catch (questionnaireErr) {
+        console.error('Questionnaire fetch error:', questionnaireErr);
+        // Don't set error here to avoid blocking other stats
+      }
       
     } catch (err: any) {
       console.error('Error loading admin dashboard stats:', err);
@@ -167,6 +224,59 @@
                 {formatNumber(stats.questionnaires)}
               {/if}
             </span>
+          </div>
+          
+          <!-- Diagnostic Info - Remove this in production -->
+          <div class="mt-4 pt-4 border-t border-gray-200">
+            <details class="text-xs text-gray-500">
+              <summary class="cursor-pointer">Database Connection Info</summary>
+              <div class="mt-2">
+                <p>Stats loaded: {!loading ? 'Yes' : 'No'}</p>
+                <p>Database status: {dbStatus}</p>
+                <p>Workouts count: {stats.workouts}</p>
+                <p>Questionnaires count: {stats.questionnaires}</p>
+                <p>Last updated: {new Date().toLocaleTimeString()}</p>
+                <button 
+                  class="mt-2 px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs"
+                  on:click={async () => {
+                    loading = true;
+                    await checkDatabaseConnection();
+                    
+                    try {
+                      const { data: workoutsData, error: workoutError } = await supabase
+                        .from('workouts')
+                        .select('id');
+                      
+                      if (workoutError) {
+                        error = `Diagnostic: ${workoutError.message}`;
+                      } else {
+                        stats.workouts = workoutsData?.length || 0;
+                      }
+                    } catch (err) {
+                      error = `Diagnostic error loading workouts: ${err instanceof Error ? err.message : String(err)}`;
+                    }
+                    
+                    try {
+                      const { data: questionnairesData, error: questionnaireError } = await supabase
+                        .from('questionnaires')
+                        .select('id');
+                      
+                      if (questionnaireError) {
+                        error = `${error || ''} Questionnaires: ${questionnaireError.message}`;
+                      } else {
+                        stats.questionnaires = questionnairesData?.length || 0;
+                      }
+                    } catch (err) {
+                      error = `${error || ''} Error loading questionnaires: ${err instanceof Error ? err.message : String(err)}`;
+                    }
+                    
+                    loading = false;
+                  }}
+                >
+                  Refresh Stats
+                </button>
+              </div>
+            </details>
           </div>
         </div>
       </div>

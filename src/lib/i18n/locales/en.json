@@ -85,7 +85,7 @@
     "trainer": "Trainer",
     "athlete": "Athlete",
     "admin": "Admin",
-    "role": {
+    "roles": {
       "admin": "Admin"
     },
     "create_account": "Create account",
@@ -160,7 +160,7 @@
         "created": "Created",
         "actions": "Actions"
       },
-      "workouts": {
+      "workouts_page": {
         "title": "Workout Management",
         "search": "Search workouts",
         "search_placeholder": "Search workouts by title or trainer",
