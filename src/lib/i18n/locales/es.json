@@ -142,7 +142,7 @@
     "admin": {
       "title": "Panel de Administrador",
       "content_statistics": "Estadísticas de Contenido",
-      "workouts": "Entrenamientos",
+      "workouts_title": "Entrenamientos",
       "questionnaires": "Cuestionarios",
       "quick_actions": "Acciones Rápidas",
       "manage_users": "Gestionar Usuarios",

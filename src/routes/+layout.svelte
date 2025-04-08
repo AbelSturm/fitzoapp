@@ -26,6 +26,10 @@
   $: isDashboard = $page.url.pathname.startsWith('/dashboard');
 </script>
 
+<svelte:head>
+  <title>Fitzio | Fitness Training Platform</title>
+</svelte:head>
+
 <div class="min-h-screen flex flex-col">
   {#if !isDashboard}
     <Header />
