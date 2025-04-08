@@ -4,6 +4,7 @@
   import Card from '$lib/components/ui/Card.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import Input from '$lib/components/ui/Input.svelte';
+  import { goto } from '$app/navigation';
   
   // User profile data
   let profile = {
@@ -24,6 +25,9 @@
   let newPassword = '';
   let confirmPassword = '';
   let changingPassword = false;
+  let deletingAccount = false;
+  let showDeleteConfirmation = false;
+  let deleteConfirmText = '';
   
   // Load user profile data
   onMount(async () => {
@@ -145,6 +149,58 @@
       error = 'Ha ocurrido un error al actualizar la contraseña.';
     } finally {
       changingPassword = false;
+    }
+  }
+  
+  // Delete user account
+  async function deleteAccount() {
+    try {
+      deletingAccount = true;
+      error = null;
+      
+      // Verify confirmation text
+      if (deleteConfirmText !== profile.email) {
+        error = 'El texto de confirmación no coincide con tu correo electrónico.';
+        deletingAccount = false;
+        return;
+      }
+      
+      // Delete user data from profiles table
+      const { error: deleteProfileError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('id', profile.id);
+      
+      if (deleteProfileError) {
+        console.error('Error deleting profile:', deleteProfileError);
+        error = 'Error al eliminar el perfil. Inténtalo de nuevo.';
+        deletingAccount = false;
+        return;
+      }
+      
+      // Delete user auth account
+      const { error: deleteAuthError } = await supabase.auth.admin.deleteUser(profile.id);
+      
+      if (deleteAuthError) {
+        console.error('Error deleting auth account:', deleteAuthError);
+        error = 'Error al eliminar la cuenta. Sin embargo, tu perfil ha sido eliminado.';
+        
+        // Sign out user even if there was an error with auth deletion
+        await supabase.auth.signOut();
+        goto('/');
+        return;
+      }
+      
+      // Sign out and redirect to home page
+      await supabase.auth.signOut();
+      goto('/');
+      
+    } catch (err) {
+      console.error('Error deleting account:', err);
+      error = 'Ha ocurrido un error al eliminar la cuenta.';
+    } finally {
+      deletingAccount = false;
+      showDeleteConfirmation = false;
     }
   }
 </script>
@@ -308,6 +364,60 @@
                 {changingPassword ? 'Actualizando...' : 'Actualizar contraseña'}
               </Button>
             </div>
+          </div>
+        </div>
+      </Card>
+      
+      <!-- Delete Account -->
+      <Card>
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Eliminar cuenta</h2>
+          
+          <div class="space-y-4">
+            <p class="text-gray-600">
+              Al eliminar tu cuenta, se borrarán permanentemente todos tus datos y no se podrán recuperar.
+            </p>
+            
+            {#if showDeleteConfirmation}
+              <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p class="text-red-600 font-medium mb-3">Esta acción no se puede deshacer</p>
+                <p class="text-gray-700 mb-3">Para confirmar, por favor escribe tu correo electrónico: <strong>{profile.email}</strong></p>
+                
+                <div class="mb-3">
+                  <Input
+                    type="text"
+                    bind:value={deleteConfirmText}
+                    placeholder="Escribe tu correo electrónico"
+                  />
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                  <Button
+                    variant="secondary"
+                    on:click={() => showDeleteConfirmation = false}
+                  >
+                    Cancelar
+                  </Button>
+                  
+                  <Button
+                    variant="danger"
+                    on:click={deleteAccount}
+                    disabled={deletingAccount || deleteConfirmText !== profile.email}
+                  >
+                    {deletingAccount ? 'Eliminando...' : 'Eliminar cuenta permanentemente'}
+                  </Button>
+                </div>
+              </div>
+            {:else}
+              <div class="flex justify-end">
+                <Button
+                  variant="danger"
+                  on:click={() => showDeleteConfirmation = true}
+                >
+                  Eliminar cuenta
+                </Button>
+              </div>
+            {/if}
           </div>
         </div>
       </Card>
