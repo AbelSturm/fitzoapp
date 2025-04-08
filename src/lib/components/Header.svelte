@@ -26,11 +26,10 @@
     if (!session) return;
     
     try {
-      const { data: profile, error } = await supabase
+      const { data: profileData, error } = await supabase
         .from('profiles')
         .select('role')
-        .eq('id', session.user.id)
-        .single();
+        .eq('id', session.user.id);
       
       if (error) {
         console.error('Error fetching profile in header:', error.message);
@@ -39,7 +38,8 @@
         return;
       }
       
-      if (profile) {
+      if (profileData && profileData.length > 0) {
+        const profile = profileData[0];
         userRole = profile.role;
         dashboardUrl = `/dashboard/${profile.role}`;
       } else {

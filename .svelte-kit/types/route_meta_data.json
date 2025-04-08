@@ -28,6 +28,16 @@
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	],
+	"/dashboard/admin/workouts": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard/admin/workouts/[id]": [
+		"src/routes/dashboard/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
 	"/dashboard/athlete": [
 		"src/routes/dashboard/+layout.server.ts",
 		"src/routes/+layout.ts",

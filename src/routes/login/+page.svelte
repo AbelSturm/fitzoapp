@@ -32,11 +32,10 @@
     if (session) {
       try {
         // User is already logged in, get their role
-        const { data: profile, error: profileError } = await supabase
+        const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select('role')
-          .eq('id', session.user.id)
-          .single();
+          .eq('id', session.user.id);
 
         if (profileError) {
           console.error('Error fetching profile, user might be deleted:', profileError.message);
@@ -45,10 +44,10 @@
           return;
         }
 
-        if (profile && profile.role) {
+        if (profileData && profileData.length > 0 && profileData[0].role) {
           // Redirect to appropriate dashboard
           console.log('User already logged in, redirecting to dashboard');
-          window.location.href = `/dashboard/${profile.role}`;
+          window.location.href = `/dashboard/${profileData[0].role}`;
         } else {
           // Handle case where profile exists but has no role
           console.warn('User profile has no role assigned');
@@ -87,13 +86,12 @@
       if (data.user) {
         console.log('Fetching user profile for ID:', data.user.id);
         // Get user role from profiles table
-        const { data: profile, error: profileError } = await supabase
+        const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select('role')
-          .eq('id', data.user.id)
-          .single();
+          .eq('id', data.user.id);
 
-        console.log('Profile query result:', { profile, profileError });
+        console.log('Profile query result:', { profileData, profileError });
 
         if (profileError) {
           console.error('Profile fetch error:', profileError);
@@ -101,16 +99,17 @@
           return;
         }
 
-        if (!profile) {
+        if (!profileData || profileData.length === 0) {
           console.error('No profile found for user');
           error = 'Profile not found. Please contact support.';
           return;
         }
 
+        const profile = profileData[0];
         console.log('User profile found:', profile);
 
         // Redirect based on role
-        if (profile.role === 'trainer' || profile.role === 'athlete') {
+        if (profile.role === 'trainer' || profile.role === 'athlete' || profile.role === 'admin') {
           const redirectUrl = `/dashboard/${profile.role}`;
           console.log('Redirecting to:', redirectUrl);
           

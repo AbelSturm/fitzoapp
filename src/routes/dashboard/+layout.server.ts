@@ -14,13 +14,12 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 
   try {
     // Get user profile with role
-    const { data: profile, error } = await locals.supabase
+    const { data: profileData, error } = await locals.supabase
       .from('profiles')
       .select('role')
-      .eq('id', session.user.id)
-      .single();
+      .eq('id', session.user.id);
     
-    console.log('Profile data:', profile);
+    console.log('Profile data:', profileData);
     console.log('Profile error:', error);
 
     // Handle database errors - user might have been deleted
@@ -32,11 +31,13 @@ export const load: LayoutServerLoad = async ({ locals }) => {
     }
 
     // Re-enable profile check
-    if (!profile) {
+    if (!profileData || profileData.length === 0) {
       console.warn('No profile found, redirecting to login.');
       await locals.supabase.auth.signOut();
       throw redirect(303, '/login');
     }
+    
+    const profile = profileData[0];
     
     // Check if user has no role assigned
     if (!profile.role) {

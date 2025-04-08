@@ -22,11 +22,10 @@
     if (session) {
       try {
         // User is already logged in, get their role
-        const { data: profile, error: profileError } = await supabase
+        const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select('role')
-          .eq('id', session.user.id)
-          .single();
+          .eq('id', session.user.id);
 
         if (profileError) {
           console.error('Error fetching profile, user might be deleted:', profileError.message);
@@ -35,10 +34,10 @@
           return;
         }
 
-        if (profile && profile.role) {
+        if (profileData && profileData.length > 0 && profileData[0].role) {
           // Redirect to appropriate dashboard
           console.log('User already logged in, redirecting to dashboard');
-          window.location.href = `/dashboard/${profile.role}`;
+          window.location.href = `/dashboard/${profileData[0].role}`;
         } else {
           // Handle case where profile exists but has no role
           console.warn('User profile has no role assigned');
@@ -60,13 +59,12 @@
       // Validate username
       if (username) {
         // Check if username is already taken
-        const { data: existingUser, error: usernameError } = await supabase
+        const { data: existingUsers, error: usernameError } = await supabase
           .from('profiles')
           .select('id')
-          .eq('username', username)
-          .single();
+          .eq('username', username);
         
-        if (existingUser) {
+        if (existingUsers && existingUsers.length > 0) {
           throw new Error($_('auth.username_taken') || 'This username is already taken. Please choose another one.');
         }
       }
