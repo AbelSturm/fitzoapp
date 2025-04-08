@@ -97,7 +97,7 @@
       <div class="px-6 mt-6">
         <!-- Language selector -->
         <div class="mb-4">
-          <label for="language-select" class="block text-sm font-medium text-gray-300 mb-2">
+          <label for="language-select" class="block text-sm font-medium text-gray-100 mb-2">
             <div class="flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
@@ -105,16 +105,23 @@
               Language
             </div>
           </label>
-          <select 
-            id="language-select"
-            bind:value={$locale} 
-            on:change={handleLanguageChange}
-            class="w-full text-sm rounded-md bg-blue-800 border-blue-700 text-white focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="ca">Català</option>
-          </select>
+          <div class="relative group">
+            <select 
+              id="language-select"
+              bind:value={$locale} 
+              on:change={handleLanguageChange}
+              class="w-full appearance-none pl-4 pr-10 py-2.5 text-sm rounded-lg bg-purple-800/40 backdrop-blur-sm border border-white/20 text-white shadow-lg hover:bg-purple-800/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-200"
+            >
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="ca">Català</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
         
         <button 
@@ -218,7 +225,7 @@
         <div class="px-6 mt-6">
           <!-- Language selector -->
           <div class="mb-4">
-            <label for="language-select" class="block text-sm font-medium text-gray-300 mb-2">
+            <label for="language-select" class="block text-sm font-medium text-gray-100 mb-2">
               <div class="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
@@ -226,16 +233,23 @@
                 Language
               </div>
             </label>
-            <select 
-              id="language-select"
-              bind:value={$locale} 
-              on:change={handleLanguageChange}
-              class="w-full text-sm rounded-md bg-blue-800 border-blue-700 text-white focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="en">English</option>
-              <option value="es">Español</option>
-              <option value="ca">Català</option>
-            </select>
+            <div class="relative group">
+              <select 
+                id="language-select"
+                bind:value={$locale} 
+                on:change={handleLanguageChange}
+                class="w-full appearance-none pl-4 pr-10 py-2.5 text-sm rounded-lg bg-purple-800/40 backdrop-blur-sm border border-white/20 text-white shadow-lg hover:bg-purple-800/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent transition-all duration-200"
+              >
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="ca">Català</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
           
           <button 

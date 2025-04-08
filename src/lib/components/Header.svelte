@@ -89,7 +89,7 @@
         <!-- Language Selector -->
         <div class="relative group mr-4">
           <select
-            class="bg-white border border-gray-300 rounded-md px-2 py-1 text-sm"
+            class="appearance-none bg-white/90 border border-gray-300 rounded-lg text-gray-800 pl-3 pr-10 py-2 text-sm shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
             value={$locale}
             on:change={setLanguage}
           >
@@ -97,6 +97,11 @@
               <option value={lang.code}>{lang.name}</option>
             {/each}
           </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
 
         {#if session}
@@ -140,15 +145,22 @@
         <div class="space-y-4">
           <!-- Language Selector -->
           <div class="px-2">
-            <select
-              class="w-full bg-white border border-gray-300 rounded-md px-2 py-1"
-              value={$locale}
-              on:change={setLanguage}
-            >
-              {#each languages as lang}
-                <option value={lang.code}>{lang.name}</option>
-              {/each}
-            </select>
+            <div class="relative">
+              <select
+                class="appearance-none w-full bg-white/90 border border-gray-300 rounded-lg text-gray-800 pl-3 pr-10 py-2.5 text-sm shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                value={$locale}
+                on:change={setLanguage}
+              >
+                {#each languages as lang}
+                  <option value={lang.code}>{lang.name}</option>
+                {/each}
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           {#if session}
