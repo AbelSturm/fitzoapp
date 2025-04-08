@@ -84,6 +84,10 @@
     "select_role": "Selecciona tu rol",
     "trainer": "Entrenador",
     "athlete": "Atleta",
+    "admin": "Administrador",
+    "role": {
+      "admin": "Administrador"
+    },
     "create_account": "Crear cuenta",
     "creating_account": "Creando cuenta...",
     "logging_in": "Iniciando sesión...",
@@ -107,6 +111,69 @@
       "getting_started": "Visualiza tus entrenamientos asignados y sigue tu progreso aquí.",
       "first_time_welcome": "¡Bienvenido a Fitzio! 🎉 Este es tu panel de atleta donde puedes ver tus entrenamientos asignados, completar cuestionarios y seguir tu progreso. Revisa las secciones a continuación para ver lo que tu entrenador te ha asignado."
     },
-    "dismiss_welcome": "¡Entendido!"
+    "dismiss_welcome": "¡Entendido!",
+    "statistics": {
+      "title": "Estadísticas de la Plataforma",
+      "total_users": "Total de Usuarios",
+      "trainers": "Entrenadores",
+      "athletes": "Atletas",
+      "user_ratio": "Ratio de Usuarios",
+      "athletes_per_trainer": "Atletas por Entrenador",
+      "new_registrations": "Nuevos Registros",
+      "timeframes": {
+        "30days": "30 Días",
+        "6months": "6 Meses",
+        "12months": "12 Meses"
+      },
+      "user_engagement": "Participación de Usuarios",
+      "active_users": "Usuarios Activos (Últimos 30 Días)",
+      "new_registrations_month": "Nuevos Registros Este Mes",
+      "administrators": "Administradores",
+      "trainer_statistics": "Estadísticas de Entrenadores",
+      "avg_questionnaires": "Promedio de Cuestionarios por Entrenador",
+      "avg_workouts": "Promedio de Entrenamientos por Entrenador",
+      "athletes_trainer_ratio": "Ratio de Atletas por Entrenador",
+      "all_registrations": "Todos los Registros",
+      "admin_users": "Administradores"
+    },
+    "admin": {
+      "title": "Panel de Administrador",
+      "content_statistics": "Estadísticas de Contenido",
+      "workouts": "Entrenamientos",
+      "questionnaires": "Cuestionarios",
+      "quick_actions": "Acciones Rápidas",
+      "manage_users": "Gestionar Usuarios",
+      "view_all_workouts": "Ver Todos los Entrenamientos",
+      "view_all_questionnaires": "Ver Todos los Cuestionarios",
+      "user_management": "Gestión de Usuarios",
+      "search_users": "Buscar usuarios",
+      "search_users_placeholder": "Buscar usuarios por email, nombre o nombre de usuario",
+      "all_roles": "Todos los Roles",
+      "users_found": "{count} usuarios encontrados",
+      "clear_filters": "Limpiar Filtros",
+      "refresh_list": "Actualizar Lista",
+      "no_users_found": "No se encontraron usuarios con esos filtros.",
+      "view_details": "Ver Detalles",
+      "table": {
+        "user": "Usuario",
+        "role": "Rol",
+        "created": "Creado",
+        "actions": "Acciones"
+      },
+      "workouts": {
+        "title": "Gestión de Entrenamientos",
+        "search": "Buscar entrenamientos",
+        "search_placeholder": "Buscar entrenamientos por título o entrenador",
+        "found": "{count} entrenamientos encontrados",
+        "no_workouts": "No se encontraron entrenamientos con esos filtros.",
+        "unknown": "Desconocido",
+        "table": {
+          "title": "Título",
+          "trainer": "Entrenador",
+          "created": "Creado",
+          "exercises": "Ejercicios"
+        }
+      }
+    }
   }
 }

@@ -3,6 +3,7 @@
   import { supabase } from '$lib/supabaseClient';
   import Card from '$lib/components/ui/Card.svelte';
   import Button from '$lib/components/ui/Button.svelte';
+  import { _ } from 'svelte-i18n';
 
   interface User {
     id: string;
@@ -89,7 +90,7 @@
 </script>
 
 <div class="max-w-7xl mx-auto">
-  <h1 class="text-3xl font-bold mb-6">User Management</h1>
+  <h1 class="text-3xl font-bold mb-6">{$_('dashboard.admin.user_management', { default: 'User Management' })}</h1>
 
   {#if error}
     <div class="bg-red-100 border-l-4 border-red-500 p-4 mb-6">
@@ -102,68 +103,70 @@
   {/if}
 
   <!-- Filters & search -->
-  <Card class="mb-6">
-    <div class="p-4">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-        <div class="flex-1 min-w-0">
-          <label for="search" class="sr-only">Search users</label>
-          <div class="relative rounded-md shadow-sm">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-              </svg>
+  <div class="mb-6">
+    <Card>
+      <div class="p-4">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+          <div class="flex-1 min-w-0">
+            <label for="search" class="sr-only">{$_('dashboard.admin.search_users', { default: 'Search users' })}</label>
+            <div class="relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <input
+                id="search"
+                type="text"
+                bind:value={searchTerm}
+                placeholder={$_('dashboard.admin.search_users_placeholder', { default: 'Search users by email, name or username' })}
+                class="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm"
+              />
             </div>
-            <input
-              id="search"
-              type="text"
-              bind:value={searchTerm}
-              placeholder="Search users by email, name or username"
-              class="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm"
-            />
+          </div>
+          
+          <div class="w-full md:w-auto">
+            <select
+              bind:value={roleFilter}
+              class="block w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md text-sm"
+            >
+              <option value="">{$_('dashboard.admin.all_roles', { default: 'All Roles' })}</option>
+              <option value="admin">{$_('auth.role.admin', { default: 'Admin' })}</option>
+              <option value="trainer">{$_('auth.trainer', { default: 'Trainer' })}</option>
+              <option value="athlete">{$_('auth.athlete', { default: 'Athlete' })}</option>
+            </select>
           </div>
         </div>
         
-        <div class="w-full md:w-auto">
-          <select
-            bind:value={roleFilter}
-            class="block w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md text-sm"
-          >
-            <option value="">All Roles</option>
-            <option value="admin">Admin</option>
-            <option value="trainer">Trainer</option>
-            <option value="athlete">Athlete</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="mt-4 flex items-center justify-between flex-wrap gap-2">
-        <div class="text-sm text-gray-500">
-          {filteredUsers.length} users found
-        </div>
-        
-        <div class="flex space-x-2">
-          <button
-            type="button"
-            class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200"
-            on:click={() => {
-              searchTerm = '';
-              roleFilter = '';
-            }}
-          >
-            Clear Filters
-          </button>
+        <div class="mt-4 flex items-center justify-between flex-wrap gap-2">
+          <div class="text-sm text-gray-500">
+            {$_('dashboard.admin.users_found', { default: `${filteredUsers.length} users found` })}
+          </div>
           
-          <button
-            type="button"
-            class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 rounded-md hover:bg-green-200"
-            on:click={loadUsers}
-          >
-            Refresh List
-          </button>
+          <div class="flex space-x-2">
+            <button
+              type="button"
+              class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-100 rounded-md hover:bg-indigo-200"
+              on:click={() => {
+                searchTerm = '';
+                roleFilter = '';
+              }}
+            >
+              {$_('dashboard.admin.clear_filters', { default: 'Clear Filters' })}
+            </button>
+            
+            <button
+              type="button"
+              class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 rounded-md hover:bg-green-200"
+              on:click={loadUsers}
+            >
+              {$_('dashboard.admin.refresh_list', { default: 'Refresh List' })}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </Card>
+    </Card>
+  </div>
 
   <!-- Users list -->
   <Card>
@@ -173,17 +176,17 @@
       </div>
     {:else if filteredUsers.length === 0}
       <div class="p-8 text-center text-gray-500">
-        No users found matching your filters.
+        {$_('dashboard.admin.no_users_found', { default: 'No users found matching your filters.' })}
       </div>
     {:else}
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.table.user', { default: 'User' })}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.table.role', { default: 'Role' })}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.table.created', { default: 'Created' })}</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{$_('dashboard.admin.table.actions', { default: 'Actions' })}</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -201,7 +204,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {getRoleBadgeClass(user.role)}">
-                    {user.role}
+                    {$_(`auth.${user.role}`, { default: user.role })}
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -213,7 +216,7 @@
                     variant="outline" 
                     size="sm"
                   >
-                    View Details
+                    {$_('dashboard.admin.view_details', { default: 'View Details' })}
                   </Button>
                 </td>
               </tr>

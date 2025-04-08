@@ -84,6 +84,10 @@
     "select_role": "Select your role",
     "trainer": "Trainer",
     "athlete": "Athlete",
+    "admin": "Admin",
+    "role": {
+      "admin": "Admin"
+    },
     "create_account": "Create account",
     "creating_account": "Creating account...",
     "logging_in": "Logging in...",
@@ -107,6 +111,69 @@
       "getting_started": "View your assigned workouts and track your progress here.",
       "first_time_welcome": "Welcome to Fitzio! 🎉 This is your athlete dashboard where you can view your assigned workouts, complete questionnaires, and track your progress. Check the sections below to see what your trainer has assigned to you."
     },
-    "dismiss_welcome": "Got it!"
+    "dismiss_welcome": "Got it!",
+    "statistics": {
+      "title": "Platform Statistics",
+      "total_users": "Total Users",
+      "trainers": "Trainers",
+      "athletes": "Athletes",
+      "user_ratio": "User Ratio",
+      "athletes_per_trainer": "Athletes per Trainer",
+      "new_registrations": "New Registrations",
+      "timeframes": {
+        "30days": "30 Days",
+        "6months": "6 Months",
+        "12months": "12 Months"
+      },
+      "user_engagement": "User Engagement",
+      "active_users": "Active Users (Last 30 Days)",
+      "new_registrations_month": "New Registrations This Month",
+      "administrators": "Administrators",
+      "trainer_statistics": "Trainer Statistics",
+      "avg_questionnaires": "Avg. Questionnaires Per Trainer",
+      "avg_workouts": "Avg. Workouts Per Trainer",
+      "athletes_trainer_ratio": "Athletes Per Trainer Ratio",
+      "all_registrations": "All Registrations",
+      "admin_users": "Admins"
+    },
+    "admin": {
+      "title": "Admin Dashboard",
+      "content_statistics": "Content Statistics",
+      "workouts": "Workouts",
+      "questionnaires": "Questionnaires",
+      "quick_actions": "Quick Actions",
+      "manage_users": "Manage Users",
+      "view_all_workouts": "View All Workouts",
+      "view_all_questionnaires": "View All Questionnaires",
+      "user_management": "User Management",
+      "search_users": "Search users",
+      "search_users_placeholder": "Search users by email, name or username",
+      "all_roles": "All Roles",
+      "users_found": "{count} users found",
+      "clear_filters": "Clear Filters",
+      "refresh_list": "Refresh List",
+      "no_users_found": "No users found matching your filters.",
+      "view_details": "View Details",
+      "table": {
+        "user": "User",
+        "role": "Role",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "workouts": {
+        "title": "Workout Management",
+        "search": "Search workouts",
+        "search_placeholder": "Search workouts by title or trainer",
+        "found": "{count} workouts found",
+        "no_workouts": "No workouts found matching your filters.",
+        "unknown": "Unknown",
+        "table": {
+          "title": "Title",
+          "trainer": "Trainer",
+          "created": "Created",
+          "exercises": "Exercises"
+        }
+      }
+    }
   }
 }

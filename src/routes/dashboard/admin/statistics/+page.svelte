@@ -4,6 +4,7 @@
   import Card from '$lib/components/ui/Card.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import Chart from 'chart.js/auto';
+  import { locale, _ } from 'svelte-i18n';
 
   // Define stats type
   interface Stats {
@@ -308,7 +309,7 @@
         labels,
         datasets: [
           {
-            label: 'All Registrations',
+            label: $_('dashboard.statistics.all_registrations'),
             data: registrationData.map(d => d.count),
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255, 99, 132, 0.5)',
@@ -323,7 +324,7 @@
             order: 10
           },
           {
-            label: 'Trainers',
+            label: $_('dashboard.statistics.trainers'),
             data: trainerData.map(d => d.count),
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             borderColor: 'rgb(54, 162, 235)',
@@ -338,7 +339,7 @@
             order: 1
           },
           {
-            label: 'Athletes',
+            label: $_('dashboard.statistics.athletes'),
             data: athleteData.map(d => d.count),
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgb(75, 192, 192)',
@@ -353,7 +354,7 @@
             order: 2
           },
           {
-            label: 'Admins',
+            label: $_('dashboard.statistics.admin_users'),
             data: adminData.map(d => d.count),
             backgroundColor: 'rgba(153, 102, 255, 0.2)',
             borderColor: 'rgb(153, 102, 255)',
@@ -492,7 +493,7 @@
 </script>
 
 <div class="max-w-7xl mx-auto">
-  <h1 class="text-3xl font-bold mb-8">Platform Statistics</h1>
+  <h1 class="text-3xl font-bold mb-8">{$_('dashboard.statistics.title')}</h1>
 
   {#if error}
     <div class="bg-red-100 border-l-4 border-red-500 p-4 mb-6">
@@ -508,7 +509,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">Total Users</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.total_users')}</div>
         <div class="text-3xl font-bold text-purple-700">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -521,7 +522,7 @@
     
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">Trainers</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.trainers')}</div>
         <div class="text-3xl font-bold text-blue-600">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -534,7 +535,7 @@
     
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">Athletes</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.athletes')}</div>
         <div class="text-3xl font-bold text-green-600">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -547,7 +548,7 @@
     
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">User Ratio</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.user_ratio')}</div>
         <div class="text-3xl font-bold text-indigo-600">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -555,35 +556,35 @@
             {stats.trainers > 0 ? (stats.athletes / stats.trainers).toFixed(1) : 0} : 1
           {/if}
         </div>
-        <div class="text-xs text-gray-500 mt-1">Athletes per Trainer</div>
+        <div class="text-xs text-gray-500 mt-1">{$_('dashboard.statistics.athletes_per_trainer')}</div>
       </div>
     </Card>
   </div>
   
   <!-- Chart implementation using Chart.js -->
-  <Card title="New Registrations Over Time">
+  <Card title="{$_('dashboard.statistics.new_registrations')}">
     <div class="p-4">
       <!-- Chart controls -->
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg font-medium">New Registrations</h3>
+        <h3 class="text-lg font-medium">{$_('dashboard.statistics.new_registrations')}</h3>
         <div class="flex space-x-2">
           <button 
             class={`px-3 py-1 text-sm rounded-md ${timeframe === '30days' ? 'bg-pink-100 text-pink-800' : 'bg-gray-100 text-gray-700'}`}
             on:click={() => changeTimeframe('30days')}
           >
-            30 Days
+            {$_('dashboard.statistics.timeframes.30days')}
           </button>
           <button 
             class={`px-3 py-1 text-sm rounded-md ${timeframe === '6months' ? 'bg-pink-100 text-pink-800' : 'bg-gray-100 text-gray-700'}`}
             on:click={() => changeTimeframe('6months')}
           >
-            6 Months
+            {$_('dashboard.statistics.timeframes.6months')}
           </button>
           <button 
             class={`px-3 py-1 text-sm rounded-md ${timeframe === '12months' ? 'bg-pink-100 text-pink-800' : 'bg-gray-100 text-gray-700'}`}
             on:click={() => changeTimeframe('12months')}
           >
-            12 Months
+            {$_('dashboard.statistics.timeframes.12months')}
           </button>
         </div>
       </div>
@@ -597,10 +598,10 @@
   
   <!-- Additional Stats Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-    <Card title="User Engagement">
+    <Card title="{$_('dashboard.statistics.user_engagement')}">
       <div class="p-4 space-y-4">
         <div class="flex justify-between items-center">
-          <span class="text-gray-600">Active Users (Last 30 Days)</span>
+          <span class="text-gray-600">{$_('dashboard.statistics.active_users')}</span>
           <span class="font-bold">
             {#if loading}
               <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
@@ -611,7 +612,7 @@
         </div>
         
         <div class="flex justify-between items-center">
-          <span class="text-gray-600">New Registrations This Month</span>
+          <span class="text-gray-600">{$_('dashboard.statistics.new_registrations_month')}</span>
           <span class="font-bold">
             {#if loading}
               <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
@@ -622,7 +623,7 @@
         </div>
         
         <div class="flex justify-between items-center">
-          <span class="text-gray-600">Administrators</span>
+          <span class="text-gray-600">{$_('dashboard.statistics.administrators')}</span>
           <span class="font-bold">
             {#if loading}
               <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
@@ -634,10 +635,10 @@
       </div>
     </Card>
     
-    <Card title="Trainer Statistics">
+    <Card title="{$_('dashboard.statistics.trainer_statistics')}">
       <div class="p-4 space-y-4">
         <div class="flex justify-between items-center">
-          <span class="text-gray-600">Avg. Questionnaires Per Trainer</span>
+          <span class="text-gray-600">{$_('dashboard.statistics.avg_questionnaires')}</span>
           <span class="font-bold">
             {#if loading}
               <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
@@ -648,7 +649,7 @@
         </div>
         
         <div class="flex justify-between items-center">
-          <span class="text-gray-600">Avg. Workouts Per Trainer</span>
+          <span class="text-gray-600">{$_('dashboard.statistics.avg_workouts')}</span>
           <span class="font-bold">
             {#if loading}
               <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
@@ -659,7 +660,7 @@
         </div>
         
         <div class="flex justify-between items-center">
-          <span class="text-gray-600">Athletes Per Trainer Ratio</span>
+          <span class="text-gray-600">{$_('dashboard.statistics.athletes_trainer_ratio')}</span>
           <span class="font-bold">
             {#if loading}
               <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>

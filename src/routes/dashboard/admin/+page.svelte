@@ -3,6 +3,7 @@
   import { supabase } from '$lib/supabaseClient';
   import Card from '$lib/components/ui/Card.svelte';
   import Button from '$lib/components/ui/Button.svelte';
+  import { _ } from 'svelte-i18n';
 
   // Stats for dashboard
   let stats = {
@@ -68,7 +69,7 @@
 </script>
 
 <div class="max-w-7xl mx-auto">
-  <h1 class="text-3xl font-bold mb-8">Admin Dashboard</h1>
+  <h1 class="text-3xl font-bold mb-8">{$_('dashboard.admin.title', { default: 'Admin Dashboard' })}</h1>
 
   {#if error}
     <div class="bg-red-100 border-l-4 border-red-500 p-4 mb-6">
@@ -89,7 +90,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">Total Users</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.total_users')}</div>
         <div class="text-3xl font-bold text-purple-700">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -102,7 +103,7 @@
     
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">Trainers</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.trainers')}</div>
         <div class="text-3xl font-bold text-blue-600">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -115,7 +116,7 @@
     
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">Athletes</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.athletes')}</div>
         <div class="text-3xl font-bold text-green-600">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -128,7 +129,7 @@
     
     <Card>
       <div class="text-center p-4">
-        <div class="text-gray-500 mb-1">User Ratio</div>
+        <div class="text-gray-500 mb-1">{$_('dashboard.statistics.user_ratio')}</div>
         <div class="text-3xl font-bold text-indigo-600">
           {#if loading}
             <div class="animate-pulse h-8 bg-gray-200 rounded"></div>
@@ -136,7 +137,7 @@
             {stats.trainers > 0 ? (stats.athletes / stats.trainers).toFixed(1) : 0} : 1
           {/if}
         </div>
-        <div class="text-xs text-gray-500 mt-1">Athletes per Trainer</div>
+        <div class="text-xs text-gray-500 mt-1">{$_('dashboard.statistics.athletes_per_trainer')}</div>
       </div>
     </Card>
   </div>
@@ -145,10 +146,10 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
     <Card>
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-4">Content Statistics</h3>
+        <h3 class="text-lg font-semibold mb-4">{$_('dashboard.admin.content_statistics', { default: 'Content Statistics' })}</h3>
         <div class="space-y-4">
           <div class="flex justify-between items-center">
-            <span class="text-gray-600">Workouts</span>
+            <span class="text-gray-600">{$_('dashboard.admin.workouts', { default: 'Workouts' })}</span>
             <span class="font-bold">
               {#if loading}
                 <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
@@ -158,7 +159,7 @@
             </span>
           </div>
           <div class="flex justify-between items-center">
-            <span class="text-gray-600">Questionnaires</span>
+            <span class="text-gray-600">{$_('dashboard.admin.questionnaires', { default: 'Questionnaires' })}</span>
             <span class="font-bold">
               {#if loading}
                 <div class="animate-pulse h-6 w-12 bg-gray-200 rounded"></div>
@@ -173,16 +174,16 @@
     
     <Card>
       <div class="p-4">
-        <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+        <h3 class="text-lg font-semibold mb-4">{$_('dashboard.admin.quick_actions', { default: 'Quick Actions' })}</h3>
         <div class="grid grid-cols-1 gap-3">
           <Button href="/dashboard/admin/users" variant="primary">
-            Manage Users
+            {$_('dashboard.admin.manage_users', { default: 'Manage Users' })}
           </Button>
           <Button href="/dashboard/admin/workouts" variant="outline">
-            View All Workouts
+            {$_('dashboard.admin.view_all_workouts', { default: 'View All Workouts' })}
           </Button>
           <Button href="/dashboard/admin/questionnaires" variant="outline">
-            View All Questionnaires
+            {$_('dashboard.admin.view_all_questionnaires', { default: 'View All Questionnaires' })}
           </Button>
         </div>
       </div>
