@@ -1,9 +1,20 @@
 {
   "hero": {
-    "title": "Entrena mejor. Entrena con propósito.",
-    "subtitle": "Fitzio conecta entrenadores y atletas para hacer el entrenamiento más inteligente, eficiente y personal.",
+    "title": "Entrena Mejor. Entrena con Propósito.",
+    "subtitle": "Fitzio conecta a entrenadores y atletas para hacer que el entrenamiento sea más inteligente, más eficiente y más personal.",
     "coach_cta": "Prueba como Entrenador",
-    "athlete_cta": "Prueba como Atleta"
+    "athlete_cta": "Prueba como Atleta",
+    "tagline": "ENTRENA A TUS CLIENTES EN LÍNEA CON LA",
+    "description": "Haz crecer tu negocio con <span class=\"font-medium\">la plataforma de software de entrenamiento personal</span> en la que confían más de 20,000 entrenadores. ¡Mantente en contacto con nosotros para recibir actualizaciones y contenido exclusivo!",
+    "email_label": "TU CORREO ELECTRÓNICO",
+    "email_placeholder": "Ingresa tu correo electrónico",
+    "cta_button": "SUSCRÍBETE »",
+    "feature_one": "Obtén contenido exclusivo de fitness",
+    "feature_two": "Mantente al día sobre nuevas funciones",
+    "dashboard_alt": "Panel de Fitzio",
+    "testimonial_highlight": "FITZIO HA <span class=\"text-purple-700\">AUMENTADO</span> NUESTROS INGRESOS MENSUALES EN <span class=\"text-purple-700\">MÁS DE $35,000</span>.",
+    "testimonial_author": "Sean Pastuch",
+    "testimonial_role": "Fundador de Active Life"
   },
   "features": {
     "title": "Lo que Ofrece Fitzio",
@@ -56,9 +67,107 @@
     "author": "– Carla, entrenadora de remo"
   },
   "cta": {
-    "title": "¿Listo para empezar?",
-    "create_account": "Crear cuenta",
-    "login": "Iniciar sesión"
+    "title": "MANTENTE CONECTADO CON FITZIO",
+    "subtitle": "Suscríbete a nuestro boletín para recibir actualizaciones, consejos de fitness y contenido exclusivo.",
+    "feature_one": "Recibe consejos y entrenamientos mensuales",
+    "feature_two": "Sé el primero en conocer las nuevas funciones",
+    "email_label": "TU CORREO ELECTRÓNICO",
+    "email_placeholder": "Ingresa tu correo electrónico",
+    "button": "SUSCRÍBETE »",
+    "create_account": "Crear Cuenta",
+    "login": "Iniciar Sesión"
+  },
+  "partners": {
+    "partner1": "Socio 1",
+    "partner2": "Socio 2",
+    "partner3": "Socio 3",
+    "partner4": "Socio 4",
+    "partner5": "Socio 5"
+  },
+  "adminFeatures": {
+    "title": "Ahorra horas de trabajo administrativo y mejora tu experiencia de entrenamiento con nuestra app para entrenadores personales",
+    "connect": {
+      "title": "Conecta, Involucra y Termina con Problemas de Responsabilidad",
+      "description": "Hacemos los cálculos de cumplimiento para cada programa de cliente que creas. Obtienes una visión general o detalles individuales para que puedas prestar atención a los clientes que lo necesitan y usar tus habilidades de entrenamiento para ayudarles a avanzar."
+    },
+    "track": {
+      "title": "Rastrea y Mide Datos de Clientes sin Esfuerzo",
+      "description": "Tus clientes pueden ingresar sus datos de entrenamiento para cada sesión. Toma decisiones de calidad sobre su próxima progresión con datos de entrenamiento fáciles de ver a tu alcance."
+    },
+    "delivery": {
+      "title": "Duplica la Entrega de Resultados y Recupera Tiempo",
+      "description": "Nuestro software de entrenamiento personal incluye un constructor de entrenamientos. Te da una visión amplia de un mes en el pasado o por adelantado, para que sepas lo que tus clientes hicieron o necesitan mientras diseñas. Esto te permite agilizar el diseño, la creación y la entrega."
+    },
+    "video": {
+      "title": "Demostraciones de Ejercicios con Tu Propia Marca",
+      "description": "Se acabó buscar entrenamientos en YouTube y vincularlos a ejercicios en una hoja de cálculo. Crea tus propios videos, súbelos a Fitzio y se vincularán automáticamente. O usa nuestra biblioteca de más de 1,200 videos preinstalados de ejercicios de fuerza y acondicionamiento."
+    }
+  },
+  "stats": {
+    "coaches": {
+      "value": "16K+",
+      "label": "ENTRENADORES TOTALES"
+    },
+    "clients": {
+      "value": "250K+",
+      "label": "CLIENTES TOTALES"
+    },
+    "workouts": {
+      "value": "50M+",
+      "label": "ENTRENAMIENTOS ENTREGADOS"
+    },
+    "demo_note": "(Datos de demostración)"
+  },
+  "mainFeatures": {
+    "title": "Pasa más tiempo entrenando a tus clientes a escala y menos tiempo en administración con el mejor software de entrenamiento personal",
+    "tabs": {
+      "workout": "Registro de Entrenamientos",
+      "videos": "Videos de Ejercicios",
+      "messaging": "Mensajería",
+      "metrics": "Métricas y Objetivos"
+    },
+    "workout": {
+      "title": "Registro Fácil de Entrenamientos para Clientes",
+      "description": "Tus clientes pueden registrar rápidamente sus entrenamientos, revisar resultados anteriores, publicar comentarios o hacerte preguntas, todo desde la aplicación móvil gratuita de Fitzio.",
+      "image_alt": "Captura de pantalla de registro de entrenamientos"
+    }
+  },
+  "businessFeatures": {
+    "title": "Pasa más tiempo entrenando a tus clientes a escala y menos tiempo en administración con el mejor software de entrenamiento personal",
+    "learn_more": "Saber Más »",
+    "client": {
+      "title": "Gestión de Clientes",
+      "description": "Con nuestro software para entrenadores personales, gestiona todos tus clientes y sus entrenamientos en un solo lugar. Facilitamos la incorporación de nuevos clientes, la entrega de planes de entrenamiento personalizados, el seguimiento del progreso y mantener la comunicación."
+    },
+    "payments": {
+      "title": "Pagos",
+      "description": "Mantén todas tus tareas administrativas en un solo lugar con Fitzio Payments. Configúralo a través de Stripe, Fitzio Payments hace que cobrar tus ingresos sea muy sencillo aceptando pagos con tarjeta de crédito y débito casi instantáneamente."
+    },
+    "progress": {
+      "title": "Seguimiento del Progreso", 
+      "description": "Facilitamos el seguimiento del historial de ejercicios y métricas, para que tanto tú como tus clientes puedan registrar resultados y visualizar el progreso hacia objetivos específicos a lo largo del tiempo."
+    }
+  },
+  "testimonials": {
+    "title": "Esto es lo que dicen nuestros clientes...",
+    "testimonial1": {
+      "quote": "<span class=\"font-bold\">Fitzio ha aumentado</span> nuestros ingresos mensuales en <span class=\"font-bold\">más de $35,000</span>.",
+      "author": "Sean Pastuch",
+      "role": "Fundador de Active Life",
+      "company": "Active Life"
+    },
+    "testimonial2": {
+      "quote": "Fitzio me permitió dar un <span class=\"font-bold\">salto masivo en eficiencia</span>.",
+      "author": "Marcus Filly",
+      "role": "Fundador de Revival Strength",
+      "company": "Revival Strength"
+    },
+    "testimonial3": {
+      "quote": "No puedes dejar pasar una oportunidad como Fitzio. Tus clientes te lo agradecerán y tendrás más tiempo para <span class=\"font-bold\">hacer crecer tu negocio</span>.",
+      "author": "Dane Delozier",
+      "role": "Fundador de Revo PT",
+      "company": "Revo PT"
+    }
   },
   "nav": {
     "login": "Iniciar sesión",

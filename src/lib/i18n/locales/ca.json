@@ -1,9 +1,20 @@
 {
   "hero": {
     "title": "Entrena millor. Entrena amb propòsit.",
-    "subtitle": "Fitzio connecta entrenadors i atletes per fer l'entrenament més intel·ligent, eficient i personal.",
-    "coach_cta": "Prova com a Entrenador",
-    "athlete_cta": "Prova com a Atleta"
+    "subtitle": "Fitzio connecta entrenadors i atletes per fer l'entrenament més intel·ligent, més eficient i més personal.",
+    "coach_cta": "Provar com a entrenador",
+    "athlete_cta": "Provar com a atleta",
+    "tagline": "ENTRENA ELS TEUS CLIENTS EN LÍNIA AMB LA",
+    "description": "Fes créixer el teu negoci amb <span class=\"font-medium\">la plataforma de programari d'entrenament personal</span> en la qual confien més de 20.000 entrenadors. Mantingues el contacte amb nosaltres per rebre actualitzacions i contingut exclusiu!",
+    "email_label": "EL TEU CORREU ELECTRÒNIC",
+    "email_placeholder": "Introdueix el teu correu",
+    "cta_button": "SUBSCRIU-TE »",
+    "feature_one": "Obtén contingut exclusiu de fitness",
+    "feature_two": "Mantén-te al dia de les noves funcions",
+    "dashboard_alt": "Tauler de Fitzio",
+    "testimonial_highlight": "FITZIO HA <span class=\"text-purple-700\">AUGMENTAT</span> ELS NOSTRES INGRESSOS MENSUALS EN <span class=\"text-purple-700\">MÉS DE $35,000</span>.",
+    "testimonial_author": "Sean Pastuch",
+    "testimonial_role": "Fundador d'Active Life"
   },
   "features": {
     "title": "El que Ofereix Fitzio",
@@ -56,9 +67,107 @@
     "author": "– Carla, entrenadora de rem"
   },
   "cta": {
-    "title": "Preparat per començar?",
+    "title": "MANTÉN-TE CONNECTAT AMB FITZIO",
+    "subtitle": "Subscriu-te al nostre butlletí per rebre actualitzacions, consells de fitness i contingut exclusiu.",
+    "feature_one": "Rep consells i entrenaments mensuals",
+    "feature_two": "Sigues el primer a conèixer les noves funcions",
+    "email_label": "EL TEU CORREU ELECTRÒNIC",
+    "email_placeholder": "Introdueix el teu correu",
+    "button": "SUBSCRIU-TE »",
     "create_account": "Crear compte",
     "login": "Iniciar sessió"
+  },
+  "partners": {
+    "partner1": "Soci 1",
+    "partner2": "Soci 2",
+    "partner3": "Soci 3",
+    "partner4": "Soci 4",
+    "partner5": "Soci 5"
+  },
+  "adminFeatures": {
+    "title": "Estalvia hores de treball administratiu i millora la teva experiència d'entrenament amb la nostra app per a entrenadors personals",
+    "connect": {
+      "title": "Connecta, Involucra i Acaba amb Problemes de Responsabilitat",
+      "description": "Fem els càlculs de compliment per a cada programa de client que crees. Obtens una visió general o detalls individuals perquè puguis prestar atenció als clients que ho necessiten i utilitzar les teves habilitats d'entrenament per ajudar-los a avançar."
+    },
+    "track": {
+      "title": "Rastreja i Mesura Dades de Clients sense Esforç",
+      "description": "Els teus clients poden introduir les seves dades d'entrenament per a cada sessió. Pren decisions de qualitat sobre la seva propera progressió amb dades d'entrenament fàcils de veure al teu abast."
+    },
+    "delivery": {
+      "title": "Duplica l'Entrega de Resultats i Recupera Temps",
+      "description": "El nostre programari d'entrenament personal inclou un constructor d'entrenaments. Et dóna una visió àmplia d'un mes en el passat o per endavant, perquè sàpigues el que els teus clients van fer o necessitaven mentre dissenyes. Això et permet agilitzar el disseny, la creació i l'entrega."
+    },
+    "video": {
+      "title": "Demostracions d'Exercicis amb la Teva Pròpia Marca",
+      "description": "S'ha acabat buscar entrenaments a YouTube i vincular-los a exercicis en un full de càlcul. Crea els teus propis vídeos, puja'ls a Fitzio i es vincularan automàticament. O utilitza la nostra biblioteca de més de 1.200 vídeos preinstal·lats d'exercicis de força i condicionament."
+    }
+  },
+  "stats": {
+    "coaches": {
+      "value": "16K+",
+      "label": "ENTRENADORS TOTALS"
+    },
+    "clients": {
+      "value": "250K+",
+      "label": "CLIENTS TOTALS"
+    },
+    "workouts": {
+      "value": "50M+",
+      "label": "ENTRENAMENTS ENTREGATS"
+    },
+    "demo_note": "(Dades de demostració)"
+  },
+  "mainFeatures": {
+    "title": "Passa més temps entrenant els teus clients a escala i menys temps en administració amb el millor programari d'entrenament personal",
+    "tabs": {
+      "workout": "Registre d'Entrenaments",
+      "videos": "Vídeos d'Exercicis",
+      "messaging": "Missatgeria",
+      "metrics": "Mètriques i Objectius"
+    },
+    "workout": {
+      "title": "Registre Fàcil d'Entrenaments per a Clients",
+      "description": "Els teus clients poden registrar ràpidament els seus entrenaments, revisar resultats anteriors, publicar comentaris o fer-te preguntes, tot des de l'aplicació mòbil gratuïta de Fitzio.",
+      "image_alt": "Captura de pantalla de registre d'entrenaments"
+    }
+  },
+  "businessFeatures": {
+    "title": "Passa més temps entrenant els teus clients a escala i menys temps en administració amb el millor programari d'entrenament personal",
+    "learn_more": "Saber Més »",
+    "client": {
+      "title": "Gestió de Clients",
+      "description": "Amb el nostre programari per a entrenadors personals, gestiona tots els teus clients i els seus entrenaments en un sol lloc. Facilitem la incorporació de nous clients, l'entrega de plans d'entrenament personalitzats, el seguiment del progrés i mantenir la comunicació."
+    },
+    "payments": {
+      "title": "Pagaments",
+      "description": "Mantén totes les teves tasques administratives en un sol lloc amb Fitzio Payments. Configura'l a través de Stripe, Fitzio Payments fa que cobrar els teus ingressos sigui molt senzill acceptant pagaments amb targeta de crèdit i dèbit gairebé instantàniament."
+    },
+    "progress": {
+      "title": "Seguiment del Progrés", 
+      "description": "Facilitem el seguiment de l'historial d'exercicis i mètriques, perquè tant tu com els teus clients pugueu registrar resultats i visualitzar el progrés cap a objectius específics al llarg del temps."
+    }
+  },
+  "testimonials": {
+    "title": "Això és el que diuen els nostres clients...",
+    "testimonial1": {
+      "quote": "<span class=\"font-bold\">Fitzio ha augmentat</span> els nostres ingressos mensuals en <span class=\"font-bold\">més de $35.000</span>.",
+      "author": "Sean Pastuch",
+      "role": "Fundador d'Active Life",
+      "company": "Active Life"
+    },
+    "testimonial2": {
+      "quote": "Fitzio em va permetre fer un <span class=\"font-bold\">salt massiu en eficiència</span>.",
+      "author": "Marcus Filly",
+      "role": "Fundador de Revival Strength",
+      "company": "Revival Strength"
+    },
+    "testimonial3": {
+      "quote": "No pots deixar passar una oportunitat com Fitzio. Els teus clients t'ho agrairan i tindràs més temps per <span class=\"font-bold\">fer créixer el teu negoci</span>.",
+      "author": "Dane Delozier",
+      "role": "Fundador de Revo PT",
+      "company": "Revo PT"
+    }
   },
   "nav": {
     "login": "Iniciar sessió",

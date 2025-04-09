@@ -1,9 +1,20 @@
 {
   "hero": {
-    "title": "Train better. Train with purpose.",
+    "title": "Train Better. Train with Purpose.",
     "subtitle": "Fitzio connects coaches and athletes to make training smarter, more efficient, and more personal.",
-    "coach_cta": "Try as a Coach",
-    "athlete_cta": "Try as an Athlete"
+    "coach_cta": "Try as Coach",
+    "athlete_cta": "Try as Athlete",
+    "tagline": "TRAIN YOUR CLIENTS ONLINE WITH THE",
+    "description": "Grow your business with <span class=\"font-medium\">the personal training software platform</span> trusted by 20,000+ coaches. Stay in touch with us for updates and exclusive content!",
+    "email_label": "YOUR EMAIL",
+    "email_placeholder": "Enter your email",
+    "cta_button": "SUBSCRIBE »",
+    "feature_one": "Get exclusive fitness content",
+    "feature_two": "Stay up to date on new features",
+    "dashboard_alt": "Fitzio Dashboard",
+    "testimonial_highlight": "FITZIO HAS <span class=\"text-purple-700\">INCREASED</span> OUR MONTHLY REVENUE BY <span class=\"text-purple-700\">OVER $35,000</span>.",
+    "testimonial_author": "Sean Pastuch",
+    "testimonial_role": "Founder of Active Life"
   },
   "features": {
     "title": "What Fitzio Offers",
@@ -56,9 +67,107 @@
     "author": "– Carla, rowing coach"
   },
   "cta": {
-    "title": "Ready to get started?",
-    "create_account": "Create account",
-    "login": "Log in"
+    "title": "STAY CONNECTED WITH FITZIO",
+    "subtitle": "Subscribe to our newsletter for updates, fitness tips, and exclusive content.",
+    "feature_one": "Receive monthly tips and workouts",
+    "feature_two": "Be the first to know about new features",
+    "email_label": "YOUR EMAIL",
+    "email_placeholder": "Enter your email",
+    "button": "SUBSCRIBE »",
+    "create_account": "Create Account",
+    "login": "Login"
+  },
+  "partners": {
+    "partner1": "Partner 1",
+    "partner2": "Partner 2",
+    "partner3": "Partner 3",
+    "partner4": "Partner 4",
+    "partner5": "Partner 5"
+  },
+  "adminFeatures": {
+    "title": "Shave hours off program admin work and upgrade your coaching experience with our personal trainer app",
+    "connect": {
+      "title": "Connect, Engage, & End Accountability Issues",
+      "description": "We do the math on compliance numbers for every client program you create. You get an overall snapshot or individual details so you can give your attention to clients who need it, and use your coaching skills to move them forward."
+    },
+    "track": {
+      "title": "Effortlessly Track & Measure Client Data",
+      "description": "Your clients can enter their workout data for each workout. Make quality decisions about their next progression with easy-to-see training data at your fingertips."
+    },
+    "delivery": {
+      "title": "Double Down On Delivery Output & Reclaim Time",
+      "description": "Our PT software includes a workout builder. It gives you a big-picture view of a month in the past or in advance, so you know what your clients did or need while you're designing. This enables you to fast-track design, creation, and delivery."
+    },
+    "video": {
+      "title": "Self-Branded Video Exercise Demos",
+      "description": "No more curating workouts on YouTube and linking them to exercises on a spreadsheet. Create your own videos, upload them to Fitzio, and it'll auto-link. Or use our library of over 1,200+ pre-loaded strength and conditioning exercise videos."
+    }
+  },
+  "stats": {
+    "coaches": {
+      "value": "16K+",
+      "label": "TOTAL COACHES"
+    },
+    "clients": {
+      "value": "250K+",
+      "label": "TOTAL CLIENTS"
+    },
+    "workouts": {
+      "value": "50M+",
+      "label": "WORKOUTS DELIVERED"
+    },
+    "demo_note": "(Demo data)"
+  },
+  "mainFeatures": {
+    "title": "Spend More Time Coaching Your Clients At Scale And Less Time On Admin With The Best Personal Training Software",
+    "tabs": {
+      "workout": "Workout Logging",
+      "videos": "Exercise Videos",
+      "messaging": "Messaging",
+      "metrics": "Metrics And Goals"
+    },
+    "workout": {
+      "title": "Easy Client Workout Logging",
+      "description": "Your clients can quickly log their workouts, review past results, post comments, or ask you questions all from the free Fitzio mobile app.",
+      "image_alt": "Workout Logging Screenshot"
+    }
+  },
+  "businessFeatures": {
+    "title": "Spend More Time On Coaching Your Clients At Scale And Less Time On Admin With The Best Personal Training Software",
+    "learn_more": "Learn More »",
+    "client": {
+      "title": "Client Management",
+      "description": "Using our personal trainer software, Manage all of your clients and their workouts in one place. We make it easy to add new clients, deliver personalized workout plans, track progress, and stay on top of communication"
+    },
+    "payments": {
+      "title": "Payments",
+      "description": "Keep all of your admin tasks in one place with Fitzio Payments. Set up through Stripe, Fitzio Payments makes collecting your revenue a breeze by accepting credit and debit card payments almost instantly."
+    },
+    "progress": {
+      "title": "Progress Tracking", 
+      "description": "We make it easy to track exercise history and metrics, so both you and your clients can log results and visualize progress towards specific goals over time."
+    }
+  },
+  "testimonials": {
+    "title": "Here's what our customers have to say...",
+    "testimonial1": {
+      "quote": "<span class=\"font-bold\">Fitzio has increased</span> our monthly revenue by <span class=\"font-bold\">over $35,000</span>.",
+      "author": "Sean Pastuch",
+      "role": "Founder of Active Life",
+      "company": "Active Life"
+    },
+    "testimonial2": {
+      "quote": "Fitzio allowed me to make a <span class=\"font-bold\">massive leap in efficiency</span>.",
+      "author": "Marcus Filly",
+      "role": "Founder of Revival Strength",
+      "company": "Revival Strength"
+    },
+    "testimonial3": {
+      "quote": "You can't pass up an opportunity like Fitzio. Your clients will thank you and you'll have more time to <span class=\"font-bold\">grow your business</span>.",
+      "author": "Dane Delozier",
+      "role": "Founder of Revo PT",
+      "company": "Revo PT"
+    }
   },
   "nav": {
     "login": "Log in",
